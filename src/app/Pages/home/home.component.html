@@ -1,11 +1,19 @@
-<mat-drawer-container class="example-container pt-4">
-  <mat-drawer mode="side" opened class="p-3" style="width: 10%;">Filters</mat-drawer>
-  <mat-drawer-content>
+<mat-drawer-container class="container-fluid">
+  <mat-drawer mode="side" opened class="sidebar p-3" style="width: 10%;">
+    Filters
+  </mat-drawer>
+  <mat-drawer-content class="page-container pt-3">
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-12">
           <div class="card-title d-flex justify-content-between">
-            <input type="text" placeholder="Search Product...">
+            <mat-form-field class="example-form-field">
+              <mat-label>Clearable input</mat-label>
+              <input matInput type="text" [(ngModel)]="value">
+              <button matSuffix mat-icon-button aria-label="Clear" *ngIf="value" (click)="value=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
             <div>
               <button mat-button>Sort by desc</button>
               <button mat-button>Sort by asc</button>
@@ -14,27 +22,39 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-4">
+        <div class="col-3">
           <div class="card p-2">
             <img src="../../../assets/Prueba.PNG" class="card-img-top" alt="...">
             <div class="card-body">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
             </div>
           </div>
         </div>
-        <div class="col-4">
+        <div class="col-3">
           <div class="card p-2">
             <img src="../../../assets/Prueba.PNG" class="card-img-top" alt="...">
             <div class="card-body">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
             </div>
           </div>
         </div>
-        <div class="col-4">
+        <div class="col-3">
           <div class="card p-2">
             <img src="../../../assets/Prueba.PNG" class="card-img-top" alt="...">
             <div class="card-body">
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="card p-2">
+            <img src="../../../assets/Prueba.PNG" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
             </div>
           </div>
         </div>

@@ -22,6 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { CartComponent } from './Pages/cart/cart.component';
 import { HomeComponent } from './Pages/home/home.component';
 import { HeaderComponent } from './Components/header/header.component';
+import {MatInputModule} from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -51,6 +53,8 @@ import { HeaderComponent } from './Components/header/header.component';
     MatBadgeModule,
     MatSnackBarModule,
     HttpClientModule,
+    MatInputModule,
+    FormsModule
 
 
   ],
