@@ -4,3 +4,10 @@
 .sidebar {
   background-color: rgba(245, 245, 245, 0.979);
 }
+.sort span{
+  color: white;
+}
+
+.sort:hover{
+  background-color: rgb(209, 207, 207);
+}

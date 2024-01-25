@@ -1,6 +1,17 @@
 <mat-drawer-container class="container-fluid">
   <mat-drawer mode="side" opened class="sidebar p-3" style="width: 10%;">
-    Filters
+    <mat-selection-list #menuCategories>
+
+      <mat-list-option *ngFor="let category of categories" [value]="category">
+        {{ category }}
+      </mat-list-option>
+
+    </mat-selection-list>
+
+    <p>
+      Options selected: {{menuCategories.selectedOptions.selected.length}}
+    </p>
+    <button (click)="showArray()">Array</button>
   </mat-drawer>
   <mat-drawer-content class="page-container pt-3">
     <div class="container-fluid">
@@ -8,15 +19,14 @@
         <div class="col-12">
           <div class="card-title d-flex justify-content-between">
             <mat-form-field class="example-form-field">
-              <mat-label>Clearable input</mat-label>
               <input matInput type="text" [(ngModel)]="value">
               <button matSuffix mat-icon-button aria-label="Clear" *ngIf="value" (click)="value=''">
                 <mat-icon>close</mat-icon>
               </button>
             </mat-form-field>
             <div>
-              <button mat-button style="color:white">Sort by desc</button>
-              <button mat-button style="color:white">Sort by asc</button>
+              <button mat-stroked-button class="sort"><span>Sort by desc</span></button>
+              <button mat-stroked-button class="sort"><span>Sort by asc</span></button>
             </div>
           </div>
         </div>
