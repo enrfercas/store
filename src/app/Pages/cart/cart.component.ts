@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ICartItem } from 'src/app/Models/cart-item';
+import { ICart, ICartItem } from 'src/app/Models/cart-item';
 
 @Component({
   selector: 'app-cart',
@@ -7,7 +7,8 @@ import { ICartItem } from 'src/app/Models/cart-item';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent {
-  public cart: ICartItem[] = [
+  public dataSource: ICartItem[];
+  public cart: ICart = {items:[
     {
       product: '../../../assets/Prueba.PNG',
       name: 'Prueba',
@@ -29,10 +30,13 @@ export class CartComponent {
       quantity: 1,
       id: 3
     },
-  ];
+  ]};
+
   public displayedColumns: string[] = ['product','name','quantity','total', 'action'];
 
-  constructor(){}
+  constructor(){
+    this.dataSource = this.cart.items
+  }
 
   onRemoveQuantity(item:ICartItem){
 
@@ -42,8 +46,8 @@ export class CartComponent {
 
   }
 
-  getTotal(){
-    return 600;
+  getTotal(items: ICartItem[]): number {
+    return items.map((item:ICartItem)=> item.price * item.quantity).reduce((sum, item)=> sum + item);
   }
 
   onClearCart(){
