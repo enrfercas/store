@@ -54,7 +54,7 @@ import { FormsModule } from '@angular/forms';
     MatSnackBarModule,
     HttpClientModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
 
 
   ],

@@ -1,14 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ICart, ICartItem } from 'src/app/Models/cart-item';
+import { CartService } from 'src/app/Services/cart.service';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent {
-  public dataSource: ICartItem[];
-  public cart: ICart = {items:[
+export class CartComponent implements OnInit {
+  public dataSource: ICartItem[] | undefined;
+  public cart: ICart | undefined;
+
+  /* public cart: ICart = {items:[
     {
       product: '../../../assets/Prueba.PNG',
       name: 'Prueba',
@@ -30,13 +33,19 @@ export class CartComponent {
       quantity: 1,
       id: 3
     },
-  ]};
+  ]}; */
 
   public displayedColumns: string[] = ['product','name','quantity','total', 'action'];
 
-  constructor(){
-    this.dataSource = this.cart.items
+  constructor(private _cartService: CartService){
+    this._cartService.$cart.subscribe((data)=>{
+      this.cart = data;
+    });
+
   }
+  ngOnInit() {
+
+}
 
   onRemoveQuantity(item:ICartItem){
 

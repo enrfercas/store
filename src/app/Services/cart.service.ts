@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { ICart, ICartItem } from '../Models/cart-item';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { IProduct } from '../Models/product';
 
 
 @Injectable({
@@ -10,9 +13,14 @@ import { ICart, ICartItem } from '../Models/cart-item';
 export class CartService {
 
   cart = new BehaviorSubject<ICart>({ items: [] });
+  $cart: Observable<ICart> = this.cart.asObservable();
 
-  constructor(private _snackBar: MatSnackBar) {}
+  constructor(private _snackBar: MatSnackBar, private _http: HttpClient) {}
 
+  getItems(): Observable<IProduct[]> {
+    return this._http.get<IProduct[]>("../../assets/Datos/products.json");
+
+  }
   addToCart(item: ICartItem): void {
     const items = [...this.cart.value.items];
 

@@ -11,64 +11,16 @@ import { CartService } from 'src/app/Services/cart.service';
 export class HomeComponent implements OnInit {
   public value: string = 'Search a product';
   public categories: string[] = ['computer', 'cell phone', 'keyboard'];
-  public products: IProduct[] = [
-    {
-      img: '../../../assets/Prueba.PNG',
-      title: 'Prueba',
-      price: 250,
-      category: 'computer',
-      id: 2,
-      description: 'Un gran computer para probar código'
-    },
-    {
-      img: '../../../assets/Prueba.PNG',
-      title: 'Prueba',
-      price: 350,
-      category: 'computer',
-      id: 2,
-      description: 'Un gran computer para probar código'
-    },
-    {
-      img: '../../../assets/Prueba.PNG',
-      title: 'Prueba',
-      price: 150,
-      category: 'computer',
-      id: 4,
-      description: 'Un gran computer para probar código'
-    },
-    {
-      img: '../../../assets/Prueba.PNG',
-      title: 'Prueba',
-      price: 650,
-      category: 'computer',
-      id: 5,
-      description: 'Un gran computer para probar código'
-    },
-    {
-      img: '../../../assets/Prueba.PNG',
-      title: 'Prueba',
-      price: 850,
-      category: 'computer',
-      id: 6,
-      description: 'Un gran computer para probar código'
-    },
-    {
-      img: '../../../assets/Prueba.PNG',
-      title: 'Prueba',
-      price: 190,
-      category: 'computer',
-      id: 7,
-      description: 'Un gran computer para probar código'
-    },
-  ]
-  ;
+  public products: IProduct[] = [];
 
   @ViewChild('menuCategories') menuCategories: MatSelectionList | undefined;
-  @Output() addToCart: EventEmitter<IProduct> = new EventEmitter();
+
 
   constructor(private cartService: CartService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.cartService.getItems().subscribe((data)=>{ this.products = data});
+  }
 
   // Esta función se puede llamar para obtener los valores seleccionados
   getSelectedCategories(): string[] | void {
@@ -83,7 +35,6 @@ export class HomeComponent implements OnInit {
     console.log(array);
   }
   onAddToCart(product: IProduct): void {
-    this.addToCart.emit(product);
     this.cartService.addToCart({
       product: product.img,
       name: product.title,
