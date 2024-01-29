@@ -24,6 +24,7 @@ import { HomeComponent } from './Pages/home/home.component';
 import { HeaderComponent } from './Components/header/header.component';
 import {MatInputModule} from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { CartService } from './Services/cart.service';
 
 
 @NgModule({
@@ -58,7 +59,7 @@ import { FormsModule } from '@angular/forms';
 
 
   ],
-  providers: [],
+  providers: [CartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

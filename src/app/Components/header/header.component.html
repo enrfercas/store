@@ -2,29 +2,21 @@
   <mat-toolbar class="border border-gray justify-content-between">
     <a routerLink="home"> E-STORE </a>
     <button mat-icon-button [mat-menu-trigger-for]="menu">
-      <mat-icon [matBadge]="1" aria-hidden="false">shopping_cart
+      <mat-icon [matBadge]="itemsQuantity" aria-hidden="false" [matBadgeHidden]="!itemsQuantity" >shopping_cart
       </mat-icon>
     </button>
     <mat-menu #menu="matMenu">
       <ul class="list-group p-3">
         <div class="mr-4">
           <span class="d-flex justify-content-between mb-3">
-            5 Items <a routerLink="cart">View Cart</a>
+            {{itemsQuantity}} Items <a routerLink="cart">View Cart</a>
           </span>
-          <li class="list-group-item d-flex justify-content-between">1X Keyboard <span class="fw-bold">{{150 |
-              currency}}</span></li>
-          <li class="list-group-item d-flex justify-content-between">1X Keyboard <span class="fw-bold p-2">{{150 |
-              currency}}</span></li>
-          <li class="list-group-item d-flex justify-content-between">1X Keyboard <span class="fw-bold p-2">{{150 |
-              currency}}</span></li>
-          <li class="list-group-item d-flex justify-content-between">1X Keyboard <span class="fw-bold p-2">{{150 |
-              currency}}</span></li>
-          <li class="list-group-item d-flex justify-content-between">Total <span class="fw-bold">{{600 |
+          <li class="list-group-item d-flex justify-content-between" *ngFor="let item of cart.items">{{item.quantity}} X {{item.name}} <span class="fw-bold">{{ item.price|
               currency}}</span></li>
         </div>
       </ul>
       <div class="pt-3 d-flex justify-content-between">
-        <button class="m-3" mat-fab color="warn">
+        <button class="m-3" mat-fab color="warn" (click)="clearCart()">
           <mat-icon>remove_shopping_cart</mat-icon>
         </button>
         <button routerLink="cart"

@@ -48,11 +48,11 @@ export class CartComponent implements OnInit {
 }
 
   onRemoveQuantity(item:ICartItem){
-
+    this._cartService.removeQuantity(item);
   }
 
   onAddQuantity(item:ICartItem) {
-
+    this._cartService.addToCart(item);
   }
 
   getTotal(items: ICartItem[]): number {
@@ -60,11 +60,11 @@ export class CartComponent implements OnInit {
   }
 
   onClearCart(){
-
+    this._cartService.clearCart();
   }
 
   onRemoveFromCart(item: ICartItem){
-
+    this._cartService.removeFromCart(item);
   }
 
   onCheckout(){}

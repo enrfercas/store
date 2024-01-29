@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { MatListOption, MatSelectionList } from '@angular/material/list';
+import { ICartItem } from 'src/app/Models/cart-item';
 import { IProduct } from 'src/app/Models/product';
 import { CartService } from 'src/app/Services/cart.service';
 
