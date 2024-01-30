@@ -1,5 +1,5 @@
 <mat-drawer-container class="container-fluid">
-  <mat-drawer mode="side" opened class="sidebar p-3" style="width: 10%;">
+  <mat-drawer mode="side" opened class="sidebar p-3" style="width: 18%;">
     <mat-selection-list #menuCategories>
 
       <mat-list-option *ngFor="let category of categories" [value]="category">
@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-3" *ngFor="let product of dataSource">
+        <div class="col-lg-3 col-md-6" *ngFor="let product of dataSource">
           <div class="card p-2 mb-2">
             <img [src]="product.img" class="card-img-top" alt="..." style="height: 300px;">
             <div class="card-body">
