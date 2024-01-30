@@ -5,6 +5,8 @@ const app = express();
 
 app.use(morgan('dev'));
 
+app.use(require('./routes/products.router'));
+
 app.set('port', 3000);
 
 
