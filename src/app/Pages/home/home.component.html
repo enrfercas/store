@@ -11,7 +11,7 @@
     <p>
       Options selected: {{menuCategories.selectedOptions.selected.length}}
     </p>
-    <button (click)="showArray()">Array</button>
+    <button class="btn btn-secondary" (click)="onFilter()">Filter</button>
   </mat-drawer>
   <mat-drawer-content class="page-container pt-3">
     <div class="container-fluid">
@@ -19,22 +19,22 @@
         <div class="col-12">
           <div class="card-title d-flex justify-content-between">
             <mat-form-field class="example-form-field">
-              <input matInput type="text" [(ngModel)]="value">
-              <button matSuffix mat-icon-button aria-label="Clear" *ngIf="value" (click)="value=''">
+              <input matInput type="text" [(ngModel)]="searchKey" (ngModelChange)="onSearch()">
+              <button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="searchKey=''">
                 <mat-icon>close</mat-icon>
               </button>
             </mat-form-field>
             <div>
-              <button mat-stroked-button class="sort"><span>Sort by desc</span></button>
-              <button mat-stroked-button class="sort"><span>Sort by asc</span></button>
+              <button mat-stroked-button class="sort" (click)="onSort('desc')"><span>Sort by desc</span></button>
+              <button mat-stroked-button class="sort" (click)="onSort('asc')"><span>Sort by asc</span></button>
             </div>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-3" *ngFor="let product of products">
+        <div class="col-3" *ngFor="let product of dataSource">
           <div class="card p-2 mb-2">
-            <img [src]="product.img" class="card-img-top" alt="...">
+            <img [src]="product.img" class="card-img-top" alt="..." style="height: 300px;">
             <div class="card-body">
               <h2 class="card-title">{{ product.title }}</h2>
               <p class="card-text">{{product.description}}</p>
