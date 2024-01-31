@@ -55,10 +55,13 @@ export class HomeComponent implements OnInit {
   onSearch(){
     const _searchKey = this.searchKey.toLowerCase();
     if(_searchKey !== 'Search a product') {
-      let fiteredProducts: IProduct[] = this.products.filter((product)=>{
+      let fiteredProducts: IProduct[] = this.dataSource.filter((product)=>{
         return product.title.toLowerCase().includes(_searchKey);
       });
       this.dataSource = fiteredProducts;
+    }
+    if(_searchKey === ''){
+      this.onFilter();
     }
   }
 
