@@ -1,6 +1,10 @@
 const productCtrl = {};
 
-productCtrl.getProducts = (req, res) => {res.send('Los Productos')};
+const Product = require('../models/Product');
+
+productCtrl.getProducts = async (req, res) => {
+    const products = await Product.find();  
+    res.send('Los Productos')};
 
 productCtrl.createProduct = (req, res) => {res.send('Creando un producto')};
 
