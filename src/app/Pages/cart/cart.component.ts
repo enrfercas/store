@@ -14,29 +14,6 @@ export class CartComponent implements OnInit, OnDestroy {
   public cart: ICart | undefined;
   private subscription: Subscription;
 
-  /* public cart: ICart = {items:[
-    {
-      product: '../../../assets/Prueba.PNG',
-      name: 'Prueba',
-      price: 150,
-      quantity: 1,
-      id: 1
-    },
-    {
-      product: '../../../assets/Prueba.PNG',
-      name: 'Prueba 2',
-      price: 150,
-      quantity: 1,
-      id: 2
-    },
-    {
-      product: '../../../assets/Prueba.PNG',
-      name: 'Prueba 3',
-      price: 150,
-      quantity: 1,
-      id: 3
-    },
-  ]}; */
 
   public displayedColumns: string[] = ['product','name','quantity','total', 'action'];
 
@@ -71,7 +48,7 @@ export class CartComponent implements OnInit, OnDestroy {
   onCheckout(): void {
     if (this.cart){
       this.http
-      .post('http://localhost:3000/checkout', {
+      .post('http://localhost:4242/checkout', {
         items: this.cart.items,
       })
       .subscribe(async (res: any) => {
