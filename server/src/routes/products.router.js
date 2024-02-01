@@ -9,10 +9,10 @@ router.get("/products", productsCtrl.getProducts);
 
 router.post("/products", productsCtrl.createProduct);
 
-router.get('/products:id', productsCtrl.getSingleProduct);
+router.get("/products/:_id", productsCtrl.getSingleProduct);
 
-router.put('/products:id', productsCtrl.editProduct);
+router.put("/products/:_id", productsCtrl.editProduct);
 
-router.delete('/products:id', productsCtrl.deleteProduct);
+router.delete("/products/:_id", productsCtrl.deleteProduct);
 
 module.exports = router;

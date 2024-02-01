@@ -52,7 +52,7 @@
     "title": "HP Paviliun",
     "price": 450,
     "category": "computers",
-    "id": 6,
+    "id": 7,
     "description": "Un gran portátil para probar código"
   },
   {
@@ -60,7 +60,7 @@
     "title": "Ausdom WebCam",
     "price": 80,
     "category": "electronic",
-    "id": 6,
+    "id": 8,
     "description": "Una gran silla para probar código"
   }
 ]
