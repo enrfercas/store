@@ -84,6 +84,7 @@ export class HomeComponent implements OnInit {
   }
 
   getCategories() {
+
     this.products.map((product) => {
       if (!this.categories.includes(product.category)) {
         this.categories.push(product.category);

@@ -18,7 +18,7 @@ export class CartComponent implements OnInit, OnDestroy {
   public displayedColumns: string[] = ['product','name','quantity','total', 'action'];
 
   constructor(private _cartService: CartService,private http: HttpClient){
-    this.subscription =this._cartService.$cart.subscribe((data)=>{
+    this.subscription = this._cartService.$cart.subscribe((data)=>{
       this.cart = data;
     });
 
