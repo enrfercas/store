@@ -1,0 +1,56 @@
+
+###
+GET http://localhost:4000/api/products
+
+
+
+###
+GET http://localhost:4000/api/products/65d7a1f104e2ab8e1e8a9959
+
+
+
+###
+POST http://localhost:4000/api/products
+Content-Type: application/json
+
+{
+    "name": "laptop lenovo",
+    "category": "laptos",
+    "price": 999.99,
+    "imgURL": "https://p1-ofp.static.pub/fes/cms/2023/05/12/kk6295zq2boodxh34jkmd38yw3u3o8138417.png"
+}
+
+###
+POST http://localhost:4000/api/products
+Content-Type: application/json
+
+{
+    "name": "laptop ibm ThinkPad 600",
+    "category": "laptos",
+    "price": 1999.99,
+    "imgURL": "https://i.ebayimg.com/images/g/a5UAAOSwaMZjw8uU/s-l1600.jpg"
+}
+
+###
+PUT http://localhost:4000/api/products/65d7a1f104e2ab8e1e8a9959
+Content-Type: application/json
+
+{
+    "name": "laptop ibm ThinkPad 600",
+    "category": "laptos",
+    "price": 2500,
+    "imgURL": "https://i.ebayimg.com/images/g/a5UAAOSwaMZjw8uU/s-l1600.jpg"
+}
+
+###
+DELETE  http://localhost:4000/api/products/65d7a1f104e2ab8e1e8a9959
+Content-Type: application/json
+
+{
+    "name": "laptop ibm ThinkPad 600",
+    "category": "laptos",
+    "price": 2500,
+    "imgURL": "https://i.ebayimg.com/images/g/a5UAAOSwaMZjw8uU/s-l1600.jpg"
+}
+
+
