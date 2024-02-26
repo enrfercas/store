@@ -23,8 +23,11 @@ import { CartComponent } from './Pages/cart/cart.component';
 import { HomeComponent } from './Pages/home/home.component';
 import { HeaderComponent } from './Components/header/header.component';
 import {MatInputModule} from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CartService } from './Services/cart.service';
+import { LoginComponent } from './Pages/login/login.component';
+import { RegistrationComponent } from './Pages/registration/registration.component';
+import { OwnersComponent } from './Pages/owners/owners.component';
 
 
 @NgModule({
@@ -33,6 +36,9 @@ import { CartService } from './Services/cart.service';
     CartComponent,
     HomeComponent,
     HeaderComponent,
+    LoginComponent,
+    RegistrationComponent,
+    OwnersComponent,
 
   ],
   imports: [
@@ -56,6 +62,7 @@ import { CartService } from './Services/cart.service';
     HttpClientModule,
     MatInputModule,
     FormsModule,
+    ReactiveFormsModule
 
 
   ],

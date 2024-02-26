@@ -28,18 +28,18 @@
 
       </mat-menu>
       <button mat-icon-button [mat-menu-trigger-for]="user">
-        <mat-icon>supervised_user_circle</mat-icon>
+        <mat-icon>manage_accounts</mat-icon>
       </button>
       <mat-menu #user="matMenu">
         <ul class="list-group p-1 align-items-center">
           <div>
-            <a routerLink="cart">Login</a>
+            <a routerLink="login">Login</a>
           </div>
           <div>
-            <a routerLink="cart">Logout</a>
+            <a routerLink="">Logout</a>
           </div>
           <div>
-            <a routerLink="cart">Register</a>
+            <a routerLink="registration">Register</a>
           </div>
         </ul>
       </mat-menu>
