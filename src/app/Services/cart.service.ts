@@ -14,13 +14,13 @@ export class CartService {
 
   cart = new BehaviorSubject<ICart>({ items: [] });
   $cart: Observable<ICart> = this.cart.asObservable();
-  private baseUrl = 'http://localhost:4242';
+  private baseUrl = 'http://localhost:4000';
 
   constructor(private _snackBar: MatSnackBar, private _http: HttpClient) {}
 
   getItems(): Observable<IProduct[]> {
     //return this._http.get<IProduct[]>("../../assets/Datos/products.json");
-    return this._http.get<IProduct[]>(this.baseUrl + "/products");
+    return this._http.get<IProduct[]>(this.baseUrl + "/api/products");
 
   }
   addToCart(item: ICartItem): void {

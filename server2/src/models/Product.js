@@ -1,13 +1,19 @@
 import { Schema, model } from "mongoose";
 
 const productSchema = new Schema({
-    name: String,
+    title: String,
     category: String,
     price: Number,
-    imgURL: String
+    img: String,
+    description: String,
+    id:Number
 },{
     timestamps: true,
     versionKey: false
 })
 export default model('Product', productSchema)
+
+
+
+
 
