@@ -1,30 +1,49 @@
 <div class="container-fluid">
   <mat-toolbar class="border border-gray justify-content-between">
     <a routerLink="home"> E-STORE </a>
-    <button mat-icon-button [mat-menu-trigger-for]="menu">
-      <mat-icon [matBadge]="itemsQuantity" aria-hidden="false" [matBadgeHidden]="!itemsQuantity" >shopping_cart
-      </mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <ul class="list-group p-3">
-        <div class="mr-4">
-          <span class="d-flex justify-content-between mb-3">
-            {{itemsQuantity}} Items <a routerLink="cart">View Cart</a>
-          </span>
-          <li class="list-group-item d-flex justify-content-between" *ngFor="let item of cart.items">{{item.quantity}} X {{item.name}} <span class="fw-bold">{{ item.price|
-              currency}}</span></li>
+    <div>
+      <button mat-icon-button [mat-menu-trigger-for]="menu">
+        <mat-icon [matBadge]="itemsQuantity" aria-hidden="false" [matBadgeHidden]="!itemsQuantity">shopping_cart
+        </mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <ul class="list-group p-3">
+          <div class="mr-4">
+            <span class="d-flex justify-content-between mb-3">
+              {{itemsQuantity}} Items <a routerLink="cart">View Cart</a>
+            </span>
+            <li class="list-group-item d-flex justify-content-between" *ngFor="let item of cart.items">{{item.quantity}}
+              X {{item.name}} <span class="fw-bold">{{ item.price|
+                currency}}</span></li>
+          </div>
+        </ul>
+        <div class="pt-3 d-flex justify-content-between">
+          <button class="m-3" mat-fab color="warn" (click)="clearCart()">
+            <mat-icon>remove_shopping_cart</mat-icon>
+          </button>
+          <button routerLink="cart" class="m-3" mat-fab color="primary">
+            <mat-icon>shopping_cart</mat-icon>
+          </button>
         </div>
-      </ul>
-      <div class="pt-3 d-flex justify-content-between">
-        <button class="m-3" mat-fab color="warn" (click)="clearCart()">
-          <mat-icon>remove_shopping_cart</mat-icon>
-        </button>
-        <button routerLink="cart"
-        class="m-3" mat-fab color="primary">
-          <mat-icon>shopping_cart</mat-icon>
-        </button>
-      </div>
 
-    </mat-menu>
+      </mat-menu>
+      <button mat-icon-button [mat-menu-trigger-for]="user">
+        <mat-icon>manage_accounts</mat-icon>
+      </button>
+      <mat-menu #user="matMenu">
+        <ul class="list-group p-1 align-items-center">
+          <div>
+            <a routerLink="login">Login</a>
+          </div>
+          <div>
+            <a routerLink="">Logout</a>
+          </div>
+          <div>
+            <a routerLink="registration">Register</a>
+          </div>
+        </ul>
+      </mat-menu>
+    </div>
+
   </mat-toolbar>
 </div>
