@@ -4,6 +4,7 @@ import { HomeComponent } from './Pages/home/home.component';
 import { CartComponent } from './Pages/cart/cart.component';
 import { LoginComponent } from './Pages/login/login.component';
 import { RegistrationComponent } from './Pages/registration/registration.component';
+import { OwnersComponent } from './Pages/owners/owners.component';
 
 
 
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path: 'registration',
     component: RegistrationComponent,
+  },
+  {
+    path: 'owners',
+    component: OwnersComponent,
   },
 ];
 

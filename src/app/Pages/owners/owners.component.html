@@ -1,1 +1,100 @@
-<p>owners works!</p>
+<mat-drawer-container class="container-fluid">
+  <mat-drawer mode="side" opened class="sidebar p-3" style="width: 18%;">
+    <mat-selection-list #menuCategories>
+
+      <mat-list-option *ngFor="let category of categories" [value]="category">
+        {{ category }}
+      </mat-list-option>
+
+    </mat-selection-list>
+
+    <p>
+      Options selected: {{menuCategories.selectedOptions.selected.length}}
+    </p>
+    <button class="btn btn-secondary" (click)="onFilter()">Filter</button>
+  </mat-drawer>
+  <mat-drawer-content class="page-container pt-3">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-12">
+          <div class="card-title d-flex justify-content-between">
+            <mat-form-field class="example-form-field">
+              <input matInput type="text" [(ngModel)]="searchKey" (ngModelChange)="onSearch()">
+              <button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="searchKey=''">
+                <mat-icon>close</mat-icon>
+              </button>
+            </mat-form-field>
+            <div>
+              <button class="btn btn-primary" (clicl)="addProduct()">Add new Product</button>
+            </div>
+            <div>
+              <button mat-stroked-button class="sort" (click)="onSort('desc')"><span>Sort by desc</span></button>
+              <button mat-stroked-button class="sort" (click)="onSort('asc')"><span>Sort by asc</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-3 col-md-6" *ngFor="let product of dataSource">
+          <div class="card p-2 mb-2">
+            <img [src]="product.img" class="card-img-top" alt="..." style="height: 300px;">
+            <div class="card-body">
+              <h2 class="card-title">{{ product.title }}</h2>
+              <p class="card-text">{{product.description}}</p>
+              <div class="d-flex justify-content-between pt-2">
+                <span class="fw-bold">{{ product.price | currency }}</span>
+                <div>
+                  <button mat-icon-button data-bs-toggle="modal"
+                    data-bs-target="#editModal"><mat-icon>edit</mat-icon></button>
+                  <button mat-icon-button><mat-icon>delete</mat-icon></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="editModalLabel">Edit Product</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex justify-content-center">
+          <form [formGroup]="form">
+            <label class="col-4 form-label" for="registerName">Name</label>
+            <input type="text" id="registerName" class="col-4 form-control" formControlName="registerName"
+              #registerName
+              [ngClass]="{ 'is-invalid' : form.get('registerName')?.touched && form.get('registerName')?.invalid }" />
+            <label class="col-4 form-label" for="registerUsername">Username</label>
+            <input type="text" id="registerUsername" class="col-4 form-control" formControlName="registerUsername"
+              #registerUsername
+              [ngClass]="{ 'is-invalid' : form.get('registerUsername')?.touched && form.get('registerUsername')?.invalid }" />
+            <label class="col-6 form-label" for="registerEmail">Email</label>
+            <input type="email" id="registerEmail" class="col-6 form-control" formControlName="registerEmail"
+              #registerEmail
+              [ngClass]="{ 'is-invalid' : form.get('registerEmail')?.touched && form.get('registerEmail')?.invalid }" />
+            <label class="form-label" for="registerPassword">Password</label>
+            <input type="password" id="registerPassword" class="form-control" formControlName="registerPassword"
+              #registerPassword
+              [ngClass]="{ 'is-invalid' : form.get('registerPassword')?.touched && form.get('registerPassword')?.invalid }" />
+            <label class="form-label" for="registerRepeatPassword">Repeat password</label>
+            <input type="password" id="registerRepeatPassword" class="form-control"
+              formControlName="registerRepeatPassword" #registerRepeatPassword
+              [ngClass]="{ 'is-invalid' : form.get('registerRepeatPassword')?.touched && form.get('registerRepeatPassword')?.invalid }" />
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
