@@ -4,11 +4,11 @@ import app from './app'
 
 
 
-app.listen(4000);    // Aquí arranca la aplicación con express
+app.listen(4242);    // Aquí arranca la aplicación con express
 
 
 
-console.log('Server on port 4000');
+console.log('Server on port 4242');
 
 
 

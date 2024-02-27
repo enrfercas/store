@@ -10,12 +10,12 @@ export const signup = async (req, res) => {
     const { username, email, password, roles } = req.body;
     try {
         const passwordHashed = await User.encryptPassword(password); // Espera a que se resuelva la promesa = await User.encryptPassword(passwordRe); // Espera a que se resuelva la promesa
-        const newUser = new User({ 
+        const newUser = new User({
             username,
-            email, 
+            email,
             password: passwordHashed
         });
-        
+
         if (roles) {
             const foundRoles = await Role.find({ name: { $in: roles } });
             newUser.roles = foundRoles.map(role => role._id);
@@ -53,5 +53,5 @@ export const signin = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Error en el login. Inténtelo más tarde' });
     }
-    
+
 }
