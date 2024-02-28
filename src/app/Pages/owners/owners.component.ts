@@ -3,35 +3,50 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatListOption, MatSelectionList } from '@angular/material/list';
 import { IProduct } from 'src/app/Models/product';
 import { CartService } from 'src/app/Services/cart.service';
+import { ProductsService } from 'src/app/Services/products.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-owners',
   templateUrl: './owners.component.html',
-  styleUrls: ['./owners.component.css']
+  styleUrls: ['./owners.component.css'],
 })
 export class OwnersComponent {
   public searchKey: string = 'Search a product';
   public categories: string[] = [];
   public products: IProduct[] = [];
   public dataSource: IProduct[] = [];
-  public form: FormGroup;
-
+  public formAdd: FormGroup;
+  public formEdit: FormGroup;
 
   @ViewChild('menuCategories') menuCategories: MatSelectionList | undefined;
 
-  constructor(private cartService: CartService, private fb: FormBuilder) {
+  constructor(
+    private cartService: CartService,
+    private fb: FormBuilder,
+    private productsService: ProductsService
+  ) {
+    this.formAdd = fb.group({
+      price: ['', [Validators.required, Validators.minLength(4)]],
+      category: ['', [Validators.required, Validators.minLength(4)]],
+      id: ['', [Validators.required, Validators.email]],
+      title: ['', [Validators.required, Validators.minLength(4)]],
+      img: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+    });
 
-    this.form = fb.group({
-      registerName: ["", [Validators.required, Validators.minLength(4)]],
-      registerUsername: ["", [Validators.required, Validators.minLength(4)]],
-      registerEmail: ["", [Validators.required, Validators.email]],
-      registerPassword: ["", [Validators.required, Validators.minLength(4)]],
-      registerRepeatPassword: ["", [Validators.required]]
-    })
+    this.formEdit = fb.group({
+      price: ['', [Validators.required, Validators.minLength(4)]],
+      category: ['', [Validators.required, Validators.minLength(4)]],
+      id: ['', [Validators.required, Validators.email]],
+      title: ['', [Validators.required, Validators.minLength(4)]],
+      img: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+    });
   }
 
   ngOnInit(): void {
-    this.cartService.getItems().subscribe((data) => {
+    this.productsService.getItems().subscribe((data) => {
       this.products = data;
       this.dataSource = data;
       console.log('Data', data);
@@ -45,8 +60,8 @@ export class OwnersComponent {
     this.dataSource = this.products;
     if (filterCategories) {
       if (filterCategories.length > 0) {
-        let fiteredProducts: IProduct[][] = filterCategories.map((category) =>{
-          let subFiltered = this.products.filter((product)=>{
+        let fiteredProducts: IProduct[][] = filterCategories.map((category) => {
+          let subFiltered = this.products.filter((product) => {
             return product.category === category;
           });
           return subFiltered;
@@ -56,33 +71,63 @@ export class OwnersComponent {
     }
   }
 
-  onSearch(){
+  onSearch() {
     const _searchKey = this.searchKey.toLowerCase();
-    if(_searchKey !== 'Search a product') {
-      let fiteredProducts: IProduct[] = this.dataSource.filter((product)=>{
+    if (_searchKey !== 'Search a product') {
+      let fiteredProducts: IProduct[] = this.dataSource.filter((product) => {
         return product.title.toLowerCase().includes(_searchKey);
       });
       this.dataSource = fiteredProducts;
     }
-    if(_searchKey === ''){
+    if (_searchKey === '') {
       this.onFilter();
     }
   }
 
-  onSort(sort:string) {
-    if(sort === 'asc') {
-      this.dataSource.sort((a,b) => a.price - b.price);
-    }else {
-      this.dataSource.sort((a,b) => b.price - a.price);
+  onSort(sort: string) {
+    if (sort === 'asc') {
+      this.dataSource.sort((a, b) => a.price - b.price);
+    } else {
+      this.dataSource.sort((a, b) => b.price - a.price);
     }
   }
 
-  addProduct(){
+  addProduct(product: IProduct) {
+    Swal.fire({
+      title: 'Do you want to add a new product?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Save',
+      denyButtonText: `Don't save`,
+    }).then((result) => {
 
+      if (result.isConfirmed) {
+        const newProduct = this.productsService.addProduct(product);
+        console.log(newProduct);
+        Swal.fire('Saved!', '', 'success');
+      } else if (result.isDenied) {
+        Swal.fire('Changes are not saved', '', 'info');
+      }
+    });
+  }
+
+  updateProduct(product: IProduct) {}
+
+  editProduct(product: IProduct) {
+    this.formEdit = this.fb.group({
+      price: [product.price, [Validators.required, Validators.minLength(4)]],
+      category: [
+        product.category,
+        [Validators.required, Validators.minLength(4)],
+      ],
+      id: [product.id, [Validators.required, Validators.email]],
+      title: [product.title, [Validators.required, Validators.minLength(4)]],
+      img: [product.img, [Validators.required]],
+      description: [product.description, [Validators.required]],
+    });
   }
 
   getCategories() {
-
     this.products.map((product) => {
       if (!this.categories.includes(product.category)) {
         this.categories.push(product.category);

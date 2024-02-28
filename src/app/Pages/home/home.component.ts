@@ -9,6 +9,7 @@ import { MatListOption, MatSelectionList } from '@angular/material/list';
 import { ICartItem } from 'src/app/Models/cart-item';
 import { IProduct } from 'src/app/Models/product';
 import { CartService } from 'src/app/Services/cart.service';
+import { ProductsService } from 'src/app/Services/products.service';
 
 @Component({
   selector: 'app-home',
@@ -24,10 +25,10 @@ export class HomeComponent implements OnInit {
 
   @ViewChild('menuCategories') menuCategories: MatSelectionList | undefined;
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private productsService: ProductsService) {}
 
   ngOnInit(): void {
-    this.cartService.getItems().subscribe((data) => {
+    this.productsService.getItems().subscribe((data) => {
       this.products = data;
       this.dataSource = data;
       console.log('Data', data);

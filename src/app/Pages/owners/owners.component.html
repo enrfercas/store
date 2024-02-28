@@ -25,7 +25,8 @@
               </button>
             </mat-form-field>
             <div>
-              <button class="btn btn-primary" (clicl)="addProduct()">Add new Product</button>
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Add new
+                Product</button>
             </div>
             <div>
               <button mat-stroked-button class="sort" (click)="onSort('desc')"><span>Sort by desc</span></button>
@@ -45,7 +46,7 @@
                 <span class="fw-bold">{{ product.price | currency }}</span>
                 <div>
                   <button mat-icon-button data-bs-toggle="modal"
-                    data-bs-target="#editModal"><mat-icon>edit</mat-icon></button>
+                    data-bs-target="#editModal" (click)="editProduct(product)"><mat-icon>edit</mat-icon></button>
                   <button mat-icon-button><mat-icon>delete</mat-icon></button>
                 </div>
               </div>
@@ -57,7 +58,7 @@
   </mat-drawer-content>
 </mat-drawer-container>
 
-<!-- Modal -->
+<!-- Modal Edit-->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -67,33 +68,70 @@
       </div>
       <div class="modal-body">
         <div class="d-flex justify-content-center">
-          <form [formGroup]="form">
-            <label class="col-4 form-label" for="registerName">Name</label>
-            <input type="text" id="registerName" class="col-4 form-control" formControlName="registerName"
-              #registerName
-              [ngClass]="{ 'is-invalid' : form.get('registerName')?.touched && form.get('registerName')?.invalid }" />
-            <label class="col-4 form-label" for="registerUsername">Username</label>
-            <input type="text" id="registerUsername" class="col-4 form-control" formControlName="registerUsername"
-              #registerUsername
-              [ngClass]="{ 'is-invalid' : form.get('registerUsername')?.touched && form.get('registerUsername')?.invalid }" />
-            <label class="col-6 form-label" for="registerEmail">Email</label>
-            <input type="email" id="registerEmail" class="col-6 form-control" formControlName="registerEmail"
-              #registerEmail
-              [ngClass]="{ 'is-invalid' : form.get('registerEmail')?.touched && form.get('registerEmail')?.invalid }" />
-            <label class="form-label" for="registerPassword">Password</label>
-            <input type="password" id="registerPassword" class="form-control" formControlName="registerPassword"
-              #registerPassword
-              [ngClass]="{ 'is-invalid' : form.get('registerPassword')?.touched && form.get('registerPassword')?.invalid }" />
-            <label class="form-label" for="registerRepeatPassword">Repeat password</label>
-            <input type="password" id="registerRepeatPassword" class="form-control"
-              formControlName="registerRepeatPassword" #registerRepeatPassword
-              [ngClass]="{ 'is-invalid' : form.get('registerRepeatPassword')?.touched && form.get('registerRepeatPassword')?.invalid }" />
+          <form [formGroup]="formEdit">
+            <label class="col-4 form-label" for="price">Price</label>
+            <input type="number" id="price" class="col-4 form-control" formControlName="price" #price
+              [ngClass]="{ 'is-invalid' : formAdd.get('price')?.touched && formAdd.get('price')?.invalid }" />
+            <label class="col-4 form-label" for="category">Category</label>
+            <input type="text" id="category" class="col-4 form-control" formControlName="category" #category
+              [ngClass]="{ 'is-invalid' : formAdd.get('category')?.touched && formAdd.get('category')?.invalid }" />
+            <label class="col-6 form-label" for="id">Id</label>
+            <input type="number" id="id" class="col-6 form-control" formControlName="id" #id
+              [ngClass]="{ 'is-invalid' : formAdd.get('id')?.touched && formAdd.get('id')?.invalid }" />
+            <label class="form-label" for="title">Title</label>
+            <input type="text" id="title" class="form-control" formControlName="title" #title
+              [ngClass]="{ 'is-invalid' : formAdd.get('title')?.touched && formAdd.get('title')?.invalid }" />
+            <label class="form-label" for="img">Img URL</label>
+            <input type="text" id="img" class="form-control" formControlName="img" #img
+              [ngClass]="{ 'is-invalid' : formAdd.get('img')?.touched && formAdd.get('img')?.invalid }" />
+            <label class="form-label" for="description">Description</label>
+            <textarea rows="6" cols="50" id="description" class="form-control" formControlName="description" #description
+              [ngClass]="{ 'is-invalid' : formAdd.get('description')?.touched && formAdd.get('description')?.invalid }"></textarea>
           </form>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary" (click)="updateProduct(formAdd.value)">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Add-->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addModalLabel">Add Product</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex justify-content-center">
+          <form [formGroup]="formAdd">
+            <label class="col-4 form-label" for="price">Price</label>
+            <input type="number" id="price" class="col-4 form-control" formControlName="price" #price
+              [ngClass]="{ 'is-invalid' : formAdd.get('price')?.touched && formAdd.get('price')?.invalid }" />
+            <label class="col-4 form-label" for="category">Category</label>
+            <input type="text" id="category" class="col-4 form-control" formControlName="category" #category
+              [ngClass]="{ 'is-invalid' : formAdd.get('category')?.touched && formAdd.get('category')?.invalid }" />
+            <label class="col-6 form-label" for="id">id</label>
+            <input type="number" id="id" class="col-6 form-control" formControlName="id" #id
+              [ngClass]="{ 'is-invalid' : formAdd.get('id')?.touched && formAdd.get('id')?.invalid }" />
+            <label class="form-label" for="title">Title</label>
+            <input type="text" id="title" class="form-control" formControlName="title" #title
+              [ngClass]="{ 'is-invalid' : formAdd.get('title')?.touched && formAdd.get('title')?.invalid }" />
+            <label class="form-label" for="img">Img URL</label>
+            <input type="text" id="img" class="form-control" formControlName="img" #img
+              [ngClass]="{ 'is-invalid' : formAdd.get('img')?.touched && formAdd.get('img')?.invalid }" />
+            <label class="form-label" for="description">Description</label>
+            <textarea rows="6" cols="50" id="description" class="form-control" formControlName="description" #description
+              [ngClass]="{ 'is-invalid' : formAdd.get('description')?.touched && formAdd.get('description')?.invalid }"></textarea>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" (click)="addProduct(formAdd.value)">Save changes</button>
       </div>
     </div>
   </div>

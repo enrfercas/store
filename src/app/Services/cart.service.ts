@@ -14,15 +14,9 @@ export class CartService {
 
   cart = new BehaviorSubject<ICart>({ items: [] });
   $cart: Observable<ICart> = this.cart.asObservable();
-  private baseUrl = 'http://localhost:4242';
 
   constructor(private _snackBar: MatSnackBar, private _http: HttpClient) {}
 
-  getItems(): Observable<IProduct[]> {
-    //return this._http.get<IProduct[]>("../../assets/Datos/products.json");
-    return this._http.get<IProduct[]>(this.baseUrl + "/api/products");
-
-  }
   addToCart(item: ICartItem): void {
     const items = [...this.cart.value.items];
 
