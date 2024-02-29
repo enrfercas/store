@@ -48,7 +48,8 @@ export const signin = async (req, res) => {
         const token = jwt.sign({ id: userFound._id }, config.SECRET, {
             expiresIn: 86400 // 24 hours
         })
-        res.status(200).json({token})
+        const roles = userFound.roles.map(role => role.name);
+        res.status(200).json({token, roles})
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error en el login. Inténtelo más tarde' });
