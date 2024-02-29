@@ -2,7 +2,8 @@ import express from 'express';
 import morgan from 'morgan';
 import productsRouter from './routes/products.routes';
 import authRouter from './routes/auth.routes';
-import userRoutes from './routes/user.routes';
+import userRouter from './routes/user.routes';
+import checkoutRouter from './routes/checkout.routes';
 import { createRoles } from './libs/initialSetup';
 import cors from 'cors';
 
@@ -25,9 +26,11 @@ app.use('/api/products', productsRouter);
 
 app.use('/api/auth', authRouter);
 
-app.use('/api/users', userRoutes);
+app.use('/api/users', userRouter);
 
-app.post("/checkout", async (req, res, next) =>{
+app.use('/api/checkout', checkoutRouter);
+
+/* app.post("/checkout", async (req, res, next) =>{
   try {
     const session = await stripe.checkout.sessions.create({
       line_items:  req.body.items.map((item) => ({
@@ -49,6 +52,7 @@ app.post("/checkout", async (req, res, next) =>{
     res.status(200).json(session);
     }catch (error) {
       next(error);
-    }});
+    }
+}); */
 
 export default app
