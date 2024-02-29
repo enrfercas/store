@@ -93,6 +93,7 @@ export class OwnersComponent {
   }
 
   addProduct(product: IProduct) {
+
     Swal.fire({
       title: 'Do you want to add a new product?',
       showDenyButton: true,
@@ -105,10 +106,12 @@ export class OwnersComponent {
         const newProduct = this.productsService.addProduct(product);
         console.log(newProduct);
         Swal.fire('Saved!', '', 'success');
+
       } else if (result.isDenied) {
         Swal.fire('Changes are not saved', '', 'info');
       }
     });
+
   }
 
   updateProduct(product: IProduct) {}
