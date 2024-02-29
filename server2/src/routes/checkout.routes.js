@@ -6,6 +6,6 @@ import { authJwt } from '../middlewares'
 
 const router = Router()
 
-router.post('/',authJwt.verifyToken, checkoutCtrl.createCheckout)
+router.post('/', checkoutCtrl.createCheckout)
 
 export default router
