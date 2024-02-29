@@ -1,11 +1,11 @@
 import { Router } from 'express'
-import {createCheckout} from '../controllers/checkout.controller'
-import * as userCtrl from '../controllers/user.controller'
+import * as checkoutCtrl from '../controllers/checkout.controller'
+
 import { authJwt } from '../middlewares'
 
 
 const router = Router()
 
-router.post('/',authJwt.verifyToken, createCheckout)
+router.post('/',authJwt.verifyToken, checkoutCtrl.createCheckout)
 
 export default router
