@@ -29,7 +29,7 @@ export class OwnersComponent {
     this.formAdd = fb.group({
       price: ['', [Validators.required, Validators.minLength(4)]],
       category: ['', [Validators.required, Validators.minLength(4)]],
-      id: ['', [Validators.required, Validators.email]],
+      id: ['', [Validators.required]],
       title: ['', [Validators.required, Validators.minLength(4)]],
       img: ['', [Validators.required]],
       description: ['', [Validators.required]],

@@ -40,7 +40,7 @@
             <img [src]="product.img" class="card-img-top" alt="..." style="height: 300px;">
             <div class="card-body">
               <h2 class="card-title">{{ product.title }}</h2>
-              <p class="card-text">{{product.description}}</p>
+              <p class="card-text">{{ product.description.length > 200 ? (product.description | slice:0:200) + '...' : product.description }}</p>
               <div class="d-flex justify-content-between pt-2">
                 <span class="fw-bold">{{ product.price | currency }}</span>
                 <button class="btn btn-primary" (click)="onAddToCart(product)">Add to cart</button>
