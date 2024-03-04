@@ -24,6 +24,9 @@
                 <mat-icon>close</mat-icon>
               </button>
             </mat-form-field>
+            <div *ngIf="auth.roles.includes('admin') || auth.roles.includes('moderator')">
+              <a class="btn btn-primary" routerLink="/owners">Management</a>
+            </div>
             <div>
               <button mat-stroked-button class="sort" (click)="onSort('desc')"><span>Sort by desc</span></button>
               <button mat-stroked-button class="sort" (click)="onSort('asc')"><span>Sort by asc</span></button>

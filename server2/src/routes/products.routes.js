@@ -8,9 +8,9 @@ const router = Router()
 
 router.get('/', productsCtrl.getProducts)
 
-router.post('/', [authJwt.verifyToken, authJwt.isAdmin], productsCtrl.createProduct)
+router.post('/', productsCtrl.createProduct)
 
-router.get('/:productId', productsCtrl.getProductById)  
+router.get('/:productId', productsCtrl.getProductById)
 
 router.put('/:productId',  [authJwt.verifyToken, authJwt.isModerator], productsCtrl.updateProductById)
 

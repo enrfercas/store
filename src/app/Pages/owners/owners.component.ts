@@ -103,8 +103,10 @@ export class OwnersComponent {
     }).then((result) => {
 
       if (result.isConfirmed) {
-        const newProduct = this.productsService.addProduct(product);
-        console.log(newProduct);
+        const newProduct = this.productsService.addProduct(product).subscribe((data)=>{
+          console.log("data: ",data);
+        })
+        console.log("newProduct: ",newProduct);
         Swal.fire('Saved!', '', 'success');
 
       } else if (result.isDenied) {

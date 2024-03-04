@@ -8,6 +8,7 @@ import {
 import { MatListOption, MatSelectionList } from '@angular/material/list';
 import { ICartItem } from 'src/app/Models/cart-item';
 import { IProduct } from 'src/app/Models/product';
+import { AuthService } from 'src/app/Services/auth.service';
 import { CartService } from 'src/app/Services/cart.service';
 import { ProductsService } from 'src/app/Services/products.service';
 
@@ -25,7 +26,7 @@ export class HomeComponent implements OnInit {
 
   @ViewChild('menuCategories') menuCategories: MatSelectionList | undefined;
 
-  constructor(private cartService: CartService, private productsService: ProductsService) {}
+  constructor(private cartService: CartService, private productsService: ProductsService, public auth: AuthService) {}
 
   ngOnInit(): void {
     this.productsService.getItems().subscribe((data) => {
