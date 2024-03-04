@@ -25,9 +25,9 @@ export class ProductsService {
 
   }
 
-  updateProduct(productId: string){
+  updateProduct(productId: string, product: IProduct): Observable<IProduct>{
 
-    return this._http.put<IProduct>(this.baseUrl + '/api/products', productId);
+    return this._http.put<IProduct>(this.baseUrl + '/api/products/' + productId, product);
 
   }
 

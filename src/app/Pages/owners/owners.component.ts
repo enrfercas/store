@@ -18,6 +18,8 @@ export class OwnersComponent {
   public dataSource: IProduct[] = [];
   public formAdd: FormGroup;
   public formEdit: FormGroup;
+  public onEdit_id: string = '';
+
 
   @ViewChild('menuCategories') menuCategories: MatSelectionList | undefined;
 
@@ -93,7 +95,6 @@ export class OwnersComponent {
   }
 
   addProduct(product: IProduct) {
-
     Swal.fire({
       title: 'Do you want to add a new product?',
       showDenyButton: true,
@@ -101,22 +102,43 @@ export class OwnersComponent {
       confirmButtonText: 'Save',
       denyButtonText: `Don't save`,
     }).then((result) => {
-
       if (result.isConfirmed) {
-        const newProduct = this.productsService.addProduct(product).subscribe((data)=>{
-          console.log("data: ",data);
-        })
-        console.log("newProduct: ",newProduct);
+        const newProduct = this.productsService
+          .addProduct(product)
+          .subscribe((data) => {
+            console.log('data: ', data);
+          });
+        console.log('newProduct: ', newProduct);
         Swal.fire('Saved!', '', 'success');
-
       } else if (result.isDenied) {
         Swal.fire('Changes are not saved', '', 'info');
       }
     });
-
   }
 
-  updateProduct(product: IProduct) {}
+  updateProduct(productId: string, product: IProduct) {
+    if (this.formEdit.valid) {
+      Swal.fire({
+        title: 'Do you want to update the product?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Save',
+        denyButtonText: `Don't save`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const newProduct = this.productsService
+            .updateProduct(productId, product)
+            .subscribe((data) => {
+              console.log('data: ', data);
+            });
+          console.log('newProduct: ', newProduct);
+          Swal.fire('Saved!', '', 'success');
+        } else if (result.isDenied) {
+          Swal.fire('Changes are not saved', '', 'info');
+        }
+      });
+    }
+  }
 
   editProduct(product: IProduct) {
     this.formEdit = this.fb.group({
@@ -125,11 +147,13 @@ export class OwnersComponent {
         product.category,
         [Validators.required, Validators.minLength(4)],
       ],
-      id: [product.id, [Validators.required, Validators.email]],
+      id: [product.id, [Validators.required]],
       title: [product.title, [Validators.required, Validators.minLength(4)]],
       img: [product.img, [Validators.required]],
       description: [product.description, [Validators.required]],
     });
+    this.onEdit_id = product._id!;
+
   }
 
   getCategories() {
