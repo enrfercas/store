@@ -14,7 +14,7 @@ router.get('/:productId', productsCtrl.getProductById);
 
 router.put('/:productId', productsCtrl.updateProductById);
 
-router.delete('/:productId',  [authJwt.verifyToken, authJwt.isAdmin], productsCtrl.deleteProductById);
+router.delete('/:productId', productsCtrl.deleteProductById);
 
 
 export default router

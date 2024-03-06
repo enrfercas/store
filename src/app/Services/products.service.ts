@@ -32,6 +32,6 @@ export class ProductsService {
   }
 
   deleteProduct(productId: string){
-    return this._http.delete<IProduct>(this.baseUrl + '/api/products');
+    return this._http.delete<IProduct>(this.baseUrl + '/api/products/'+ productId );
   }
 }

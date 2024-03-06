@@ -20,7 +20,6 @@ export class OwnersComponent {
   public formEdit: FormGroup;
   public onEdit_id: string = '';
 
-
   @ViewChild('menuCategories') menuCategories: MatSelectionList | undefined;
 
   constructor(
@@ -153,7 +152,6 @@ export class OwnersComponent {
       description: [product.description, [Validators.required]],
     });
     this.onEdit_id = product._id!;
-
   }
 
   getCategories() {
@@ -170,5 +168,29 @@ export class OwnersComponent {
         (option: MatListOption) => option.value
       );
     }
+  }
+
+  onDelete(product: IProduct): void {
+    Swal.fire({
+      title: 'Do you want to delete the product?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      denyButtonText: `Don't delete this product`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if(product._id){
+          const newProduct = this.productsService
+          .deleteProduct(product._id)
+          .subscribe((data) => {
+            console.log('data: ', data);
+          });
+        console.log('newProduct: ', newProduct);
+        Swal.fire('Deleted!', '', 'success');
+        }
+      } else if (result.isDenied) {
+        Swal.fire('Changes are not saved', '', 'info');
+      }
+    });
   }
 }
