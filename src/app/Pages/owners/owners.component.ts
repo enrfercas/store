@@ -4,6 +4,7 @@ import { MatListOption, MatSelectionList } from '@angular/material/list';
 import { IProduct } from 'src/app/Models/product';
 import { CartService } from 'src/app/Services/cart.service';
 import { ProductsService } from 'src/app/Services/products.service';
+import { UtilsService } from 'src/app/Services/utils.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -19,13 +20,15 @@ export class OwnersComponent {
   public formAdd: FormGroup;
   public formEdit: FormGroup;
   public onEdit_id: string = '';
+  public isDesktop: boolean;
 
   @ViewChild('menuCategories') menuCategories: MatSelectionList | undefined;
 
   constructor(
     private cartService: CartService,
     private fb: FormBuilder,
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private utils: UtilsService
   ) {
     this.formAdd = fb.group({
       price: ['', [Validators.required, Validators.minLength(4)]],
@@ -44,6 +47,8 @@ export class OwnersComponent {
       img: ['', [Validators.required]],
       description: ['', [Validators.required]],
     });
+
+    this.isDesktop = this.utils.isDesktop;
   }
 
   ngOnInit(): void {

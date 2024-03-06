@@ -1,5 +1,5 @@
 <mat-drawer-container class="container-fluid">
-  <mat-drawer mode="side" opened class="sidebar p-3" style="width: 18%;">
+  <mat-drawer mode="side" opened class="sidebar p-3" style="width: 18%;" *ngIf="isDesktop">
     <mat-selection-list #menuCategories>
 
       <mat-list-option *ngFor="let category of categories" [value]="category">
@@ -30,6 +30,22 @@
             <div>
               <button mat-stroked-button class="sort" (click)="onSort('desc')"><span>Sort by desc</span></button>
               <button mat-stroked-button class="sort" (click)="onSort('asc')"><span>Sort by asc</span></button>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card p-2 m-2 h-100" *ngIf="!isDesktop">
+              <mat-selection-list #menuCategories>
+
+                <mat-list-option *ngFor="let category of categories" [value]="category">
+                  {{ category }}
+                </mat-list-option>
+
+              </mat-selection-list>
+
+              <p>
+                Options selected: {{menuCategories.selectedOptions.selected.length}}
+              </p>
+              <button class="btn btn-secondary" (click)="onFilter()">Filter</button>
             </div>
           </div>
         </div>

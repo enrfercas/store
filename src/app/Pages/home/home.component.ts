@@ -11,6 +11,7 @@ import { IProduct } from 'src/app/Models/product';
 import { AuthService } from 'src/app/Services/auth.service';
 import { CartService } from 'src/app/Services/cart.service';
 import { ProductsService } from 'src/app/Services/products.service';
+import { UtilsService } from 'src/app/Services/utils.service';
 
 @Component({
   selector: 'app-home',
@@ -22,11 +23,14 @@ export class HomeComponent implements OnInit {
   public categories: string[] = [];
   public products: IProduct[] = [];
   public dataSource: IProduct[] = [];
+  public isDesktop: boolean;
 
 
   @ViewChild('menuCategories') menuCategories: MatSelectionList | undefined;
 
-  constructor(private cartService: CartService, private productsService: ProductsService, public auth: AuthService) {}
+  constructor(private cartService: CartService, private productsService: ProductsService, public auth: AuthService, private utils: UtilsService) {
+    this.isDesktop = this.utils.isDesktop;
+  }
 
   ngOnInit(): void {
     this.productsService.getItems().subscribe((data) => {
