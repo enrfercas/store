@@ -20,6 +20,7 @@ export class AuthService {
     response.then((data)=>{
       this.authResponse = data;
       this.token = data.token;
+      localStorage.setItem('token', data.token);
       console.log("Respuesta del post",data);
       if(this.authResponse){
         this.roles = this.authResponse.roles;
