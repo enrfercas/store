@@ -1,6 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import productsRouter from './routes/products.routes';
+import ordersRouter from './routes/orders.routes';
 import authRouter from './routes/auth.routes';
 import userRouter from './routes/user.routes';
 import checkoutRouter from './routes/checkout.routes';
@@ -29,6 +30,8 @@ app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
 
 app.use('/checkout', checkoutRouter);
+
+app.use('/api/orders', ordersRouter);
 
 
 
