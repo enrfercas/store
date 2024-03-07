@@ -18,7 +18,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CartComponent } from './Pages/cart/cart.component';
 import { HomeComponent } from './Pages/home/home.component';
 import { HeaderComponent } from './Components/header/header.component';
@@ -28,6 +28,7 @@ import { CartService } from './Services/cart.service';
 import { LoginComponent } from './Pages/login/login.component';
 import { RegistrationComponent } from './Pages/registration/registration.component';
 import { OwnersComponent } from './Pages/owners/owners.component';
+import { MyIntercepInterceptor } from './Services/my-intercep.interceptor';
 
 
 @NgModule({
@@ -66,7 +67,11 @@ import { OwnersComponent } from './Pages/owners/owners.component';
 
 
   ],
-  providers: [CartService],
+  providers: [CartService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: MyIntercepInterceptor,
+    multi: true,
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

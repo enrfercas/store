@@ -8,13 +8,14 @@ const router = Router();
 
 router.get('/', productsCtrl.getProducts);
 
-router.post('/', productsCtrl.createProduct);
+router.post('/', [authJwt.verifyToken, authJwt.isAdmin] ,productsCtrl.createProduct);
 
-router.get('/:productId', productsCtrl.getProductById);
+router.get('/:productId', [authJwt.verifyToken] ,productsCtrl.getProductById);
 
-router.put('/:productId', productsCtrl.updateProductById);
+router.put('/:productId', [authJwt.verifyToken, authJwt.isModerator], productsCtrl.updateProductById);
 
-router.delete('/:productId', productsCtrl.deleteProductById);
+router.delete('/:productId', [authJwt.verifyToken, authJwt.isAdmin], productsCtrl.deleteProductById);
+                                                                    
 
 
 export default router
