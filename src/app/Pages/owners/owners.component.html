@@ -17,25 +17,29 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-12">
-          <div class="card-title d-flex justify-content-between align-content-center">
-            <mat-form-field class="example-form-field">
+          <div class="card-title d-flex justify-content-between">
+            <mat-form-field class="example-form-field mt-3">
               <input matInput type="text" [(ngModel)]="searchKey" (ngModelChange)="onSearch()">
               <button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="searchKey=''">
                 <mat-icon>close</mat-icon>
               </button>
             </mat-form-field>
-            <div>
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal" *ngIf="isDesktop">
+            <div class="d-flex align-items-center">
+              <button class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#addModal" *ngIf="isDesktop">
                 Add new Product
               </button>
               <i class="material-icons" data-bs-toggle="modal" data-bs-target="#addModal" *ngIf="!isDesktop">
-                add_circle</i>
-            </div>
-            <div>
-              <button class="sort" (click)="onSort('desc')" *ngIf="isDesktop"><span>Sort by desc</span></button>
-              <i mat-stroked-button class="material-icons" (click)="onSort('desc')" *ngIf="!isDesktop">arrow_upward</i>
-              <button mat-stroked-button class="sort" (click)="onSort('asc')" *ngIf="isDesktop"><span>Sort by asc</span></button>
-              <i mat-stroked-button class="material-icons" (click)="onSort('asc')" *ngIf="!isDesktop">arrow_downward</i>
+                add_circle
+              </i>
+
+              <div class="d-flex">
+                <button mat-stroked-button class="sort" (click)="onSort('desc')" *ngIf="isDesktop"><span>Sort by desc</span></button>
+                <i mat-stroked-button class="material-icons" (click)="onSort('desc')"
+                  *ngIf="!isDesktop">arrow_upward</i>
+                <button mat-stroked-button class="sort" (click)="onSort('asc')" *ngIf="isDesktop"><span>Sort by asc</span></button>
+                <i mat-stroked-button class="material-icons" (click)="onSort('asc')"
+                  *ngIf="!isDesktop">arrow_downward</i>
+              </div>
             </div>
           </div>
           <div class="col-12">
@@ -67,8 +71,8 @@
                 <div class="d-flex justify-content-between pt-2">
                   <span class="fw-bold">{{ product.price | currency }}</span>
                   <div>
-                    <button mat-icon-button data-bs-toggle="modal"
-                      data-bs-target="#editModal" (click)="editProduct(product)"><mat-icon>edit</mat-icon></button>
+                    <button mat-icon-button data-bs-toggle="modal" data-bs-target="#editModal"
+                      (click)="editProduct(product)"><mat-icon>edit</mat-icon></button>
                     <button mat-icon-button (click)="onDelete(product)"><mat-icon>delete</mat-icon></button>
                   </div>
                 </div>
@@ -108,14 +112,16 @@
             <input type="text" id="img" class="form-control" formControlName="img" #img
               [ngClass]="{ 'is-invalid' : formAdd.get('img')?.touched && formAdd.get('img')?.invalid }" />
             <label class="form-label" for="description">Description</label>
-            <textarea rows="6" cols="50" id="description" class="form-control" formControlName="description" #description
+            <textarea rows="6" cols="50" id="description" class="form-control" formControlName="description"
+              #description
               [ngClass]="{ 'is-invalid' : formAdd.get('description')?.touched && formAdd.get('description')?.invalid }"></textarea>
           </form>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" (click)="updateProduct(onEdit_id, formEdit.value)">Save changes</button>
+        <button type="submit" class="btn btn-primary" (click)="updateProduct(onEdit_id, formEdit.value)">Save
+          changes</button>
       </div>
     </div>
   </div>
@@ -147,7 +153,8 @@
             <input type="text" id="img" class="form-control" formControlName="img" #img
               [ngClass]="{ 'is-invalid' : formAdd.get('img')?.touched && formAdd.get('img')?.invalid }" />
             <label class="form-label" for="description">Description</label>
-            <textarea rows="6" cols="50" id="description" class="form-control" formControlName="description" #description
+            <textarea rows="6" cols="50" id="description" class="form-control" formControlName="description"
+              #description
               [ngClass]="{ 'is-invalid' : formAdd.get('description')?.touched && formAdd.get('description')?.invalid }"></textarea>
           </form>
         </div>

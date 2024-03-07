@@ -4,6 +4,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Subscription } from 'rxjs';
 import { ICart, ICartItem } from 'src/app/Models/cart-item';
 import { CartService } from 'src/app/Services/cart.service';
+import { UtilsService } from 'src/app/Services/utils.service';
 
 @Component({
   selector: 'app-cart',
@@ -13,14 +14,20 @@ import { CartService } from 'src/app/Services/cart.service';
 export class CartComponent implements OnInit, OnDestroy {
   public cart: ICart | undefined;
   private subscription: Subscription;
+  public isDesktop: boolean = false;
 
 
   public displayedColumns: string[] = ['product','name','quantity','total', 'action'];
 
-  constructor(private _cartService: CartService,private http: HttpClient){
+  constructor(private _cartService: CartService,private http: HttpClient, private utils: UtilsService){
     this.subscription = this._cartService.$cart.subscribe((data)=>{
       this.cart = data;
     });
+
+    this.isDesktop = this.utils.isDesktop;
+    if(!this.isDesktop){
+      this.displayedColumns.shift();
+    }
 
   }
   ngOnInit() {}
