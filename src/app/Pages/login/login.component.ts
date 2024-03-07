@@ -26,16 +26,29 @@ export class LoginComponent implements OnInit {
 
   }
 
-  onSubmit(formValue: FormGroup): void {
+  async onSubmit(formValue: FormGroup): Promise<void> {
     if(this.form.valid) {
       console.log(formValue);
-      console.log("La respuesta del servicio: ",this.authService.onLoggIn(formValue));
+
+      const res = await this.authService.onLoggIn(formValue).then((data: any) =>{
+
+        console.log("Subscripción desde el componente",data);
+
+        if((this.authService.isLoggedIn)){
+          if((this.authService.roles.includes("admin")) || (this.authService.roles.includes("moderator"))) {
+
+            this.router.navigate(['owners']);
+          } else {
+            this.router.navigate(['']);
+          }
+        }else {
+          alert("Wrong password or username");
+        }
+      });
       console.log("El token desde el componente: ",this.authService.token);
-      //this.router.navigate(['']);
+      console.log("IsLogged: ",this.authService.isLoggedIn);
+      console.log("El role desde el componente: ",this.authService.roles);
+
     }
-    /* const token = this.authService.onLoggIn(formValue);
-    console.log(token); */
-
   }
-
 }

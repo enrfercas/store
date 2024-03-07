@@ -1,5 +1,5 @@
 <mat-drawer-container class="container-fluid">
-  <mat-drawer mode="side" opened class="sidebar p-3" style="width: 18%;">
+  <mat-drawer mode="side" opened class="sidebar p-3" style="width: 18%;" *ngIf="isDesktop">
     <mat-selection-list #menuCategories>
 
       <mat-list-option *ngFor="let category of categories" [value]="category">
@@ -18,36 +18,63 @@
       <div class="row mb-2">
         <div class="col-12">
           <div class="card-title d-flex justify-content-between">
-            <mat-form-field class="example-form-field">
+            <mat-form-field class="example-form-field mt-3">
               <input matInput type="text" [(ngModel)]="searchKey" (ngModelChange)="onSearch()">
               <button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="searchKey=''">
                 <mat-icon>close</mat-icon>
               </button>
             </mat-form-field>
-            <div>
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">Add new
-                Product</button>
+            <div class="d-flex align-items-center">
+              <button class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#addModal" *ngIf="isDesktop">
+                Add new Product
+              </button>
+              <i class="material-icons" data-bs-toggle="modal" data-bs-target="#addModal" *ngIf="!isDesktop">
+                add_circle
+              </i>
+
+              <div class="d-flex">
+                <button mat-stroked-button class="sort" (click)="onSort('desc')" *ngIf="isDesktop"><span>Sort by desc</span></button>
+                <i mat-stroked-button class="material-icons" (click)="onSort('desc')"
+                  *ngIf="!isDesktop">arrow_upward</i>
+                <button mat-stroked-button class="sort" (click)="onSort('asc')" *ngIf="isDesktop"><span>Sort by asc</span></button>
+                <i mat-stroked-button class="material-icons" (click)="onSort('asc')"
+                  *ngIf="!isDesktop">arrow_downward</i>
+              </div>
             </div>
-            <div>
-              <button mat-stroked-button class="sort" (click)="onSort('desc')"><span>Sort by desc</span></button>
-              <button mat-stroked-button class="sort" (click)="onSort('asc')"><span>Sort by asc</span></button>
+          </div>
+          <div class="col-12">
+            <div class="card p-2 m-2 h-100" *ngIf="!isDesktop">
+              <mat-selection-list #menuCategories>
+
+                <mat-list-option *ngFor="let category of categories" [value]="category">
+                  {{ category }}
+                </mat-list-option>
+
+              </mat-selection-list>
+
+              <p>
+                Options selected: {{menuCategories.selectedOptions.selected.length}}
+              </p>
+              <button class="btn btn-secondary" (click)="onFilter()">Filter</button>
             </div>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-3 col-md-6" *ngFor="let product of dataSource">
-          <div class="card p-2 mb-2">
+        <div class="col-lg-3 col-md-6 mb-4" *ngFor="let product of dataSource">
+          <div class="card p-2 m-2 h-100">
             <img [src]="product.img" class="card-img-top" alt="..." style="height: 300px;">
-            <div class="card-body">
+            <div class="card-body d-flex flex-column">
               <h2 class="card-title">{{ product.title }}</h2>
               <p class="card-text">{{product.description}}</p>
-              <div class="d-flex justify-content-between pt-2">
-                <span class="fw-bold">{{ product.price | currency }}</span>
-                <div>
-                  <button mat-icon-button data-bs-toggle="modal"
-                    data-bs-target="#editModal" (click)="editProduct(product)"><mat-icon>edit</mat-icon></button>
-                  <button mat-icon-button><mat-icon>delete</mat-icon></button>
+              <div class="mt-auto">
+                <div class="d-flex justify-content-between pt-2">
+                  <span class="fw-bold">{{ product.price | currency }}</span>
+                  <div>
+                    <button mat-icon-button data-bs-toggle="modal" data-bs-target="#editModal"
+                      (click)="editProduct(product)"><mat-icon>edit</mat-icon></button>
+                    <button mat-icon-button (click)="onDelete(product)"><mat-icon>delete</mat-icon></button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -85,14 +112,16 @@
             <input type="text" id="img" class="form-control" formControlName="img" #img
               [ngClass]="{ 'is-invalid' : formAdd.get('img')?.touched && formAdd.get('img')?.invalid }" />
             <label class="form-label" for="description">Description</label>
-            <textarea rows="6" cols="50" id="description" class="form-control" formControlName="description" #description
+            <textarea rows="6" cols="50" id="description" class="form-control" formControlName="description"
+              #description
               [ngClass]="{ 'is-invalid' : formAdd.get('description')?.touched && formAdd.get('description')?.invalid }"></textarea>
           </form>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" (click)="updateProduct(formAdd.value)">Save changes</button>
+        <button type="submit" class="btn btn-primary" (click)="updateProduct(onEdit_id, formEdit.value)">Save
+          changes</button>
       </div>
     </div>
   </div>
@@ -124,7 +153,8 @@
             <input type="text" id="img" class="form-control" formControlName="img" #img
               [ngClass]="{ 'is-invalid' : formAdd.get('img')?.touched && formAdd.get('img')?.invalid }" />
             <label class="form-label" for="description">Description</label>
-            <textarea rows="6" cols="50" id="description" class="form-control" formControlName="description" #description
+            <textarea rows="6" cols="50" id="description" class="form-control" formControlName="description"
+              #description
               [ngClass]="{ 'is-invalid' : formAdd.get('description')?.touched && formAdd.get('description')?.invalid }"></textarea>
           </form>
         </div>

@@ -33,13 +33,16 @@
       <mat-menu #user="matMenu">
         <ul class="list-group p-1 align-items-center">
           <div>
-            <a routerLink="login">Login</a>
+            <a routerLink="login" *ngIf="!isLoggedIn">Login</a>
           </div>
           <div>
-            <a routerLink="">Logout</a>
+            <a routerLink="" *ngIf="isLoggedIn">Logout</a>
           </div>
           <div>
-            <a routerLink="registration">Register</a>
+            <a routerLink="registration" *ngIf="!isLoggedIn">Register</a>
+          </div>
+          <div>
+            <a routerLink="" *ngIf="isLoggedIn">My Orders</a>
           </div>
         </ul>
       </mat-menu>

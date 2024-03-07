@@ -6,30 +6,65 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  public user: any;
-  public token: { token: string } | undefined;
+  public authResponse: { token: string, roles: string[] } | undefined;
   private baseUrl: string = 'http://localhost:4242/api/auth/';
   public isLoggedIn: boolean = false;
+  public roles: string [] = [];
+  public token : string | undefined;
 
   constructor(private http: HttpClient) {}
 
-  onLoggIn(user:any): boolean {
+  async onLoggIn(user:any): Promise<any> {
+    const response = this.http.post<any>(this.baseUrl + 'signin',user).toPromise();
 
-    this.http.post(this.baseUrl + 'signin',user).subscribe((data: any) => {
-      this.token = data;
+    response.then((data)=>{
+      this.authResponse = data;
+      this.token = data.token;
       console.log("Respuesta del post",data);
+      if(this.authResponse){
+        this.roles = this.authResponse.roles;
+        console.log("Respuesta de la petición en el servicio",this.authResponse);
 
+      }
+      if (this.authResponse?.token === "") {
+        this.isLoggedIn = false;
+
+
+      } else {
+        this.isLoggedIn = true;
+
+      }
     });
 
+    return response;
 
-    if (this.token?.token === "") {
-      this.isLoggedIn = false;
-      return this.isLoggedIn
 
-    } else {
-      this.isLoggedIn = true;
-      return this.isLoggedIn;
-    }
+
+
+
+    /* this.http.post<{ token: string, roles: string[] }>(this.baseUrl + 'signin',user).subscribe((data: any) => {
+      this.authResponse = data;
+      this.token = data.token;
+      console.log("Respuesta del post",data);
+      if(this.authResponse){
+        this.roles = this.authResponse.roles;
+        console.log("Respuesta de la petición en el servicio",this.authResponse);
+
+      }
+      if (this.authResponse?.token === "") {
+        this.isLoggedIn = false;
+
+
+      } else {
+        this.isLoggedIn = true;
+
+      }
+
+    }); */
+
+
+
+
     /* console.log("El user antes de la llamada a Post",user);
     return this.http.post(this.baseUrl + 'signup', user); */
   }

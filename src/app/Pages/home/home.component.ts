@@ -8,8 +8,10 @@ import {
 import { MatListOption, MatSelectionList } from '@angular/material/list';
 import { ICartItem } from 'src/app/Models/cart-item';
 import { IProduct } from 'src/app/Models/product';
+import { AuthService } from 'src/app/Services/auth.service';
 import { CartService } from 'src/app/Services/cart.service';
 import { ProductsService } from 'src/app/Services/products.service';
+import { UtilsService } from 'src/app/Services/utils.service';
 
 @Component({
   selector: 'app-home',
@@ -21,11 +23,14 @@ export class HomeComponent implements OnInit {
   public categories: string[] = [];
   public products: IProduct[] = [];
   public dataSource: IProduct[] = [];
+  public isDesktop: boolean;
 
 
   @ViewChild('menuCategories') menuCategories: MatSelectionList | undefined;
 
-  constructor(private cartService: CartService, private productsService: ProductsService) {}
+  constructor(private cartService: CartService, private productsService: ProductsService, public auth: AuthService, private utils: UtilsService) {
+    this.isDesktop = this.utils.isDesktop;
+  }
 
   ngOnInit(): void {
     this.productsService.getItems().subscribe((data) => {
@@ -76,7 +81,7 @@ export class HomeComponent implements OnInit {
 
   onAddToCart(product: IProduct): void {
     this.cartService.addToCart({
-      product: product.img,
+      img: product.img,
       name: product.title,
       price: product.price,
       quantity: 1,
