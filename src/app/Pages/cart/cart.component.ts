@@ -55,7 +55,7 @@ export class CartComponent implements OnInit, OnDestroy {
   onCheckout(): void {
     if (this.cart){
       this.http
-      .post('http://localhost:4242/checkout', {
+      .post('http://localhost:4242/checkout/', {
         items: this.cart.items,
       })
       .subscribe(async (res: any) => {
