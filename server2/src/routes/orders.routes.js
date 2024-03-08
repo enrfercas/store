@@ -14,6 +14,8 @@ router.get('/:orderId', OrdersCtrl.getOrderById)
 
 router.put('/:orderId', OrdersCtrl.updateOrderById)
 
+router.delete('/:orderId', OrdersCtrl.deleteOrderById)
+
 
 export default router
 

@@ -19,16 +19,7 @@ export class MyIntercepInterceptor implements HttpInterceptor {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
     });
-    console.log(newClonerequest);
-    console.log(next);
-    console.log(newClonerequest.headers);
-    console.log(newClonerequest.body);
-    console.log(newClonerequest.url);
-    console.log(newClonerequest.method);
-    console.log(newClonerequest.params);
-    console.log(newClonerequest.responseType);
-    console.log(newClonerequest.withCredentials);
-    console.log(newClonerequest.reportProgress);
+    
     
     return next.handle(newClonerequest);
   
