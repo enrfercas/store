@@ -3,13 +3,12 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable()
 export class MyIntercepInterceptor implements HttpInterceptor {
-
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -32,5 +31,6 @@ export class MyIntercepInterceptor implements HttpInterceptor {
     console.log(newClonerequest.reportProgress);
     
     return next.handle(newClonerequest);
+  
   }
 }
