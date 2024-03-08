@@ -4,12 +4,15 @@ import { authJwt } from '../middlewares'
 
 const router = Router()
 
-router.post('/', [authJwt.verifyToken], OrdersCtrl.createOrder)
+router.post('/', OrdersCtrl.createOrder)
 
-router.get('/', [authJwt.verifyToken], OrdersCtrl.getOrdersByUser)
+// router.get('/:IdUsuario', [authJwt.verifyToken], OrdersCtrl.getOrdersByUser)
 
-router.get('/', [authJwt.verifyToken, authJwt.isAdmin], OrdersCtrl.getOrders)
+router.get('/', OrdersCtrl.getOrders)
 
+router.get('/:orderId', OrdersCtrl.getOrderById)
+
+router.put('/:orderId', OrdersCtrl.updateOrderById)
 
 
 export default router

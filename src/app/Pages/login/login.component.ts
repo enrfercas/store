@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
   async onSubmit(formValue: FormGroup): Promise<void> {
     if(this.form.valid) {
       console.log(formValue);
-
+      
       const res = await this.authService.onLoggIn(formValue).then((data: any) =>{
 
         console.log("Subscripción desde el componente",data);

@@ -1,0 +1,32 @@
+[{
+        
+    "user": "65d897cfb45d446861ad465c",
+    "total": 500,
+    "suborders": [
+        {
+            
+            "idProducto": "65bb38f893706ed1c6a508be",
+            "quantity": 3,
+            "subtotal": 300
+        },
+        {
+            
+            "idProducto": "65bb39a393706ed1c6a508c2",
+            "quantity": 2,
+            "subtotal": 200
+        }
+    ]
+},
+{
+    
+    "user": "65d897cfb45d446861ad465c",
+    "total": 100,
+    "suborders": [
+        {
+            
+            "idproducto": "65bb38f893706ed1c6a508be",
+            "quantity": 1,
+            "subtotal": 100
+        }
+    ]
+}]

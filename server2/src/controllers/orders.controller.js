@@ -1,10 +1,11 @@
-import Order from "../models/Product";
+
+import Order from "../models/Orders";
 //import Product from "../models/Product";
 //import User from "../models/User";
 
 
 export const getOrders = async (req, res) => {
-    const orders = await Order.find();
+    const orders = await Orders.find();
     res.status(200).json(orders);
 }
 export const getOrderById = async (req, res) => {
@@ -12,10 +13,10 @@ export const getOrderById = async (req, res) => {
     res.status(200).json(order);
 }
 
-export const getOrdersByUser = async (req, res) => {
-    const orders = await Order.find({user: req.params.userId});
+/* export const getOrdersByUser = async (req, res) => {
+    const orders = await Orders.find({user: req.params.userId});
     res.status(200).json(orders);
-}
+} */
 
 export const createOrder = async (req, res) => {
     const {body} = req;

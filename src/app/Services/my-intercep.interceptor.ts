@@ -13,7 +13,7 @@ export class MyIntercepInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const token = localStorage.getItem('token');
+   
     const newClonerequest = request.clone({
       setHeaders: {
         'Content-Type': 'application/json',
