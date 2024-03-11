@@ -74,8 +74,7 @@
               </button>
             </td>
             <td mat-footer-cell *matFooterCellDef>
-              <button
-                (click)="onCheckout()"
+              <button data-bs-toggle="modal" data-bs-target="#checkoutModal"
                 mat-raised-button
                 color="primary"
                 class="float-right"
@@ -98,6 +97,39 @@
         <button mat-raised-button routerLink="/home">Start Shopping</button>
       </p>
     </mat-card>
+    </div>
+  </div>
+  <!-- Modal Checkout-->
+  <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutLabel" aria-hidden="true" #checkoutModal>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="checkoutLabel">Payment</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex justify-content-center">
+            <form [formGroup]="formPayment">
+              <label class="col-4 form-label" for="fullname">Full name</label>
+              <input type="text" id="fullname" class="col-4 form-control" formControlName="fullname" #fullname
+                [ngClass]="{ 'is-invalid' : formPayment.get('fullname')?.touched && formPayment.get('fullname')?.invalid }" />
+              <label class="col-4 form-label" for="cardNumber">Card Number</label>
+              <input type="number" id="cardNumber" class="col-4 form-control" formControlName="cardNumber" #cardNumber
+                [ngClass]="{ 'is-invalid' : formPayment.get('cardNumber')?.touched && formPayment.get('cardNumber')?.invalid }" />
+              <label class="col-6 form-label" for="cvv">CVV</label>
+              <input type="number" id="cvv" class="col-6 form-control" formControlName="cvv" #cvv
+                [ngClass]="{ 'is-invalid' : formPayment.get('cvv')?.touched && formPayment.get('cvv')?.invalid }" />
+              <label class="form-label" for="expireDate">Expire Date</label>
+              <input type="text" id="expireDate" class="form-control" formControlName="expireDate" #expireDate
+                [ngClass]="{ 'is-invalid' : formPayment.get('expireDate')?.touched && formPayment.get('expireDate')?.invalid }" />
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" (click)="onCheckout()">Save changes</button>
+        </div>
+      </div>
     </div>
   </div>
 

@@ -29,6 +29,8 @@ import { LoginComponent } from './Pages/login/login.component';
 import { RegistrationComponent } from './Pages/registration/registration.component';
 import { OwnersComponent } from './Pages/owners/owners.component';
 import { MyIntercepInterceptor } from './Services/my-intercep.interceptor';
+import * as bootstrap from "bootstrap";
+import * as $ from "jquery";
 
 
 @NgModule({

@@ -29,7 +29,7 @@ app.use('/api/auth', authRouter);
 
 app.use('/api/users', userRouter);
 
-app.use('/checkout', checkoutRouter);
+//app.use('/checkout', checkoutRouter);
 
 app.use('/api/orders', ordersRouter);
 

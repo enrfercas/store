@@ -1,6 +1,6 @@
 import stripe from "stripe";
 
-const stripeClient = stripe("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");
+const stripeClient = stripe("");
 
 export const createCheckout = async (req, res) => {
 
