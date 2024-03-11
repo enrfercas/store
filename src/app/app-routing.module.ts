@@ -5,6 +5,7 @@ import { CartComponent } from './Pages/cart/cart.component';
 import { LoginComponent } from './Pages/login/login.component';
 import { RegistrationComponent } from './Pages/registration/registration.component';
 import { OwnersComponent } from './Pages/owners/owners.component';
+import { authGuard } from './Guards/auth.guard';
 
 
 
@@ -16,6 +17,7 @@ const routes: Routes = [
   {
     path: 'cart',
     component: CartComponent,
+    canActivate: [authGuard]
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
@@ -29,6 +31,7 @@ const routes: Routes = [
   {
     path: 'owners',
     component: OwnersComponent,
+    canActivate: [authGuard]
   },
 ];
 

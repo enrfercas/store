@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,7 +13,7 @@ export class AuthService {
   public roles: string [] = [];
   public token : string | undefined;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   async onLoggIn(user:any): Promise<any> {
     
@@ -22,6 +23,7 @@ export class AuthService {
       this.authResponse = data;
       this.token = data.token;
       localStorage.setItem('token', data.token);
+      localStorage.setItem('roles', data.roles);
       console.log("Respuesta del post",data);
       if(this.authResponse){
         this.roles = this.authResponse.roles;
@@ -71,6 +73,34 @@ export class AuthService {
     return this.http.post(this.baseUrl + 'signup', user); */
   }
 
-  onLogout(): void {}
+  onLogout(): void {
+    /* this.authResponse = undefined;
+    this.isLoggedIn = false;
+    this.roles = [];
+    localStorage.removeItem('token');
+    localStorage.removeItem('roles');
+    console.log("Se ha cerrado la sesión");
+    window.location.reload();
+    return; */
+
+    this.http.post(this.baseUrl + 'signout', {}).subscribe();
+    this.router.navigate(['/login']);
+    this.authResponse = undefined;
+    this.isLoggedIn = false;
+    this.roles = [];
+    localStorage.removeItem('token');
+    localStorage.removeItem('roles');
+    console.log("Se ha cerrado la sesión");
+    window.location.reload();
+    return;
+
+    //this.http.post(this.baseUrl + 'signout', {}).subscribe();
+    //this.router.navigate(['/login']);
+    //this.authResponse = undefined;
+    //this.isLoggedIn = false;
+    //this.roles = [];
+    //localStorage.removeItem('token');
+    //localStorage.removeItem
+  }
 
 }
