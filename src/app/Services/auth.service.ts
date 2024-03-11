@@ -74,14 +74,7 @@ export class AuthService {
   }
 
   onLogout(): void {
-    /* this.authResponse = undefined;
-    this.isLoggedIn = false;
-    this.roles = [];
-    localStorage.removeItem('token');
-    localStorage.removeItem('roles');
-    console.log("Se ha cerrado la sesión");
-    window.location.reload();
-    return; */
+    
 
     this.http.post(this.baseUrl + 'signout', {}).subscribe();
     this.router.navigate(['/login']);
@@ -94,13 +87,7 @@ export class AuthService {
     window.location.reload();
     return;
 
-    //this.http.post(this.baseUrl + 'signout', {}).subscribe();
-    //this.router.navigate(['/login']);
-    //this.authResponse = undefined;
-    //this.isLoggedIn = false;
-    //this.roles = [];
-    //localStorage.removeItem('token');
-    //localStorage.removeItem
+   
   }
 
 }
