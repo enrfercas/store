@@ -3,12 +3,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { loadStripe } from '@stripe/stripe-js';
+import * as bootstrap from 'bootstrap';
 import { Subscription } from 'rxjs';
 import { ICart, ICartItem } from 'src/app/Models/cart-item';
+import { AuthService } from 'src/app/Services/auth.service';
 import { CartService } from 'src/app/Services/cart.service';
+import { OrdersService } from 'src/app/Services/orders.service';
 import { UtilsService } from 'src/app/Services/utils.service';
 import Swal from 'sweetalert2';
-
 
 @Component({
   selector: 'app-cart',
@@ -34,7 +36,9 @@ export class CartComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private utils: UtilsService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private orderService: OrdersService,
+    private auth: AuthService
   ) {
     this.subscription = this._cartService.$cart.subscribe((data) => {
       this.cart = data;
@@ -53,7 +57,11 @@ export class CartComponent implements OnInit, OnDestroy {
         [
           Validators.required,
           Validators.minLength(8),
-          Validators.pattern(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)]]
+          Validators.pattern(
+            /^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/
+          ),
+        ],
+      ],
     });
   }
   ngOnInit() {}
@@ -80,7 +88,7 @@ export class CartComponent implements OnInit, OnDestroy {
     this._cartService.removeFromCart(item);
   }
 
-  onCheckout(): void {
+  onCheckout(paymentForm: any): void {
     /* if (this.cart){
       this.http
       .post('http://localhost:4242/checkout/', {
@@ -104,20 +112,18 @@ export class CartComponent implements OnInit, OnDestroy {
         if (result.isConfirmed) {
           Swal.fire('Purchase confirmed!', '', 'success').then(() => {
             console.log('Purchase confirmed');
-            $('#checkoutModal').hide();
-            this.router.navigate(['/']);
-            /* let modalInstance = document.getElementById('checkoutModal');
-            if (modalInstance){
-              modalInstance.modal('hide');
-              this.router.navigate(['/']);
-            } */
-            //$('#myModal').modal('hide');
+            const user = this.auth.authResponse
+            const order = {
 
+            }
+            this.orderService.addOrder(paymentForm);
+            this._cartService.clearCart();
+            this.router.navigate(['']);
           });
         } else if (result.isDenied) {
           Swal.fire('Cancelled', '', 'info');
           let modalInstance = document.getElementById('checkoutModal');
-          if (modalInstance){
+          if (modalInstance) {
             modalInstance.hidden = true;
             this.router.navigate(['/']);
           }
