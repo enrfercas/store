@@ -81,6 +81,9 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   onCheckout(): void {
+
+   
+
     /* if (this.cart){
       this.http
       .post('http://localhost:4242/checkout/', {
@@ -104,7 +107,7 @@ export class CartComponent implements OnInit, OnDestroy {
         if (result.isConfirmed) {
           Swal.fire('Purchase confirmed!', '', 'success').then(() => {
             console.log('Purchase confirmed');
-            $('#checkoutModal').hide();
+            $('#checkoutModal').modal('hide');
             this.router.navigate(['/']);
             /* let modalInstance = document.getElementById('checkoutModal');
             if (modalInstance){

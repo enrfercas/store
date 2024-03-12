@@ -49,7 +49,8 @@ export const signin = async (req, res) => {
             expiresIn: 86400 // 24 hours
         })
         const roles = userFound.roles.map(role => role.name);
-        res.status(200).json({token, roles})
+        const userId = userFound._id;
+        res.status(200).json({token, roles, userId});
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error en el login. Inténtelo más tarde' });
