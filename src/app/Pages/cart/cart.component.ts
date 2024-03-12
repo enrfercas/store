@@ -89,6 +89,9 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   onCheckout(paymentForm: any): void {
+
+
+
     /* if (this.cart){
       this.http
       .post('http://localhost:4242/checkout/', {
