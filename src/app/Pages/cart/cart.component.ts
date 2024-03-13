@@ -3,12 +3,15 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { loadStripe } from '@stripe/stripe-js';
+import * as bootstrap from 'bootstrap';
 import { Subscription } from 'rxjs';
 import { ICart, ICartItem } from 'src/app/Models/cart-item';
+import { IOrder } from 'src/app/Models/order';
+import { AuthService } from 'src/app/Services/auth.service';
 import { CartService } from 'src/app/Services/cart.service';
+import { OrdersService } from 'src/app/Services/orders.service';
 import { UtilsService } from 'src/app/Services/utils.service';
 import Swal from 'sweetalert2';
-
 
 @Component({
   selector: 'app-cart',
@@ -16,7 +19,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit, OnDestroy {
-  public cart: ICart | undefined;
+  public cart: ICart = {items: []};
   private subscription: Subscription;
   public isDesktop: boolean = false;
   public formPayment: FormGroup;
@@ -34,7 +37,9 @@ export class CartComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private utils: UtilsService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private orderService: OrdersService,
+    private auth: AuthService
   ) {
     this.subscription = this._cartService.$cart.subscribe((data) => {
       this.cart = data;
@@ -53,7 +58,11 @@ export class CartComponent implements OnInit, OnDestroy {
         [
           Validators.required,
           Validators.minLength(8),
-          Validators.pattern(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)]]
+          Validators.pattern(
+            /^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/
+          ),
+        ],
+      ],
     });
   }
   ngOnInit() {}
@@ -80,9 +89,9 @@ export class CartComponent implements OnInit, OnDestroy {
     this._cartService.removeFromCart(item);
   }
 
-  onCheckout(): void {
+  onCheckout(paymentForm: any): void {
 
-   
+
 
     /* if (this.cart){
       this.http
@@ -96,7 +105,7 @@ export class CartComponent implements OnInit, OnDestroy {
         });
       });
     } */
-    if (this.cart) {
+    if (this.cart ) {
       Swal.fire({
         title: 'Do you want to confirm the purchase?',
         showDenyButton: true,
@@ -106,21 +115,30 @@ export class CartComponent implements OnInit, OnDestroy {
       }).then((result) => {
         if (result.isConfirmed) {
           Swal.fire('Purchase confirmed!', '', 'success').then(() => {
-            console.log('Purchase confirmed');
-            $('#checkoutModal').modal('hide');
-            this.router.navigate(['/']);
-            /* let modalInstance = document.getElementById('checkoutModal');
-            if (modalInstance){
-              modalInstance.modal('hide');
-              this.router.navigate(['/']);
-            } */
-            //$('#myModal').modal('hide');
 
+            const userId = this.auth.userId;
+            const order: IOrder = {
+              userId: userId,
+              suborders: this.cart?.items.map((item)=>{
+                return {
+                  productId: item._id,
+                  quantity: item.quantity,
+                  subtotal: item.price * item.quantity
+                }
+              }),
+              total: this.getTotal(this.cart.items)
+            };
+            this.orderService.addOrder(order).subscribe((response)=>{
+              console.log("La respuesta desde el component", response);
+            });
+            console.log('Purchase confirmed', order);
+            this._cartService.clearCart();
+            this.router.navigate(['']);
           });
         } else if (result.isDenied) {
           Swal.fire('Cancelled', '', 'info');
           let modalInstance = document.getElementById('checkoutModal');
-          if (modalInstance){
+          if (modalInstance) {
             modalInstance.hidden = true;
             this.router.navigate(['/']);
           }

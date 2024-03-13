@@ -4,6 +4,7 @@ export interface ICartItem {
   price: number;
   quantity: number;
   id: number;
+  _id?: string;
 }
 
 export interface ICart{

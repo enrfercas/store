@@ -6,6 +6,7 @@ import { LoginComponent } from './Pages/login/login.component';
 import { RegistrationComponent } from './Pages/registration/registration.component';
 import { OwnersComponent } from './Pages/owners/owners.component';
 import { authGuard } from './Guards/auth.guard';
+import { OrdersListComponent } from './Pages/orders-list/orders-list.component';
 
 
 
@@ -32,6 +33,11 @@ const routes: Routes = [
     path: 'owners',
     component: OwnersComponent,
     canActivate: [authGuard]
+  },
+  {
+    path: 'orders',
+    component: OrdersListComponent,
+    //canActivate: [authGuard]
   },
 ];
 
