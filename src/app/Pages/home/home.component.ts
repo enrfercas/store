@@ -86,6 +86,7 @@ export class HomeComponent implements OnInit {
       price: product.price,
       quantity: 1,
       id: product.id,
+      _id: product._id,
     });
   }
 

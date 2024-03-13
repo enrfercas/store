@@ -12,16 +12,18 @@ export class AuthService {
   public isLoggedIn: boolean = false;
   public roles: string [] = [];
   public token : string | undefined;
+  public userId: string | undefined;
 
   constructor(private http: HttpClient, private router: Router) {}
 
   async onLoggIn(user:any): Promise<any> {
-    
+
     const response = this.http.post<any>(this.baseUrl + 'signin',user).toPromise();
 
     response.then((data)=>{
       this.authResponse = data;
       this.token = data.token;
+      this.userId = data.userId;
       localStorage.setItem('token', data.token);
       localStorage.setItem('roles', data.roles);
       console.log("Respuesta del post",data);
@@ -74,7 +76,7 @@ export class AuthService {
   }
 
   onLogout(): void {
-    
+
 
     this.http.post(this.baseUrl + 'signout', {}).subscribe();
     this.router.navigate(['/login']);
@@ -87,7 +89,7 @@ export class AuthService {
     window.location.reload();
     return;
 
-   
+
   }
 
 }

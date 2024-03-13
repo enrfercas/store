@@ -3,9 +3,14 @@ import { IUser } from "./user";
 
 export interface IOrder {
 
-  product: IProduct;
-  user: IUser;
-  cardNumber?: number;
-  cvv?: number;
-  expiry?: number;
+  userId?: string;
+  suborders?: ISubOrder[];
+  total: number;
+}
+
+export interface ISubOrder {
+
+  productId?: string;
+  quantity?: number;
+  subtotal?: number;
 }

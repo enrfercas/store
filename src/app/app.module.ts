@@ -31,6 +31,7 @@ import { OwnersComponent } from './Pages/owners/owners.component';
 import { MyIntercepInterceptor } from './Services/my-intercep.interceptor';
 import * as bootstrap from "bootstrap";
 import * as $ from "jquery";
+import { OrdersListComponent } from './Pages/orders-list/orders-list.component';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import * as $ from "jquery";
     LoginComponent,
     RegistrationComponent,
     OwnersComponent,
+    OrdersListComponent,
 
   ],
   imports: [

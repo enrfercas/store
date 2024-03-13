@@ -6,6 +6,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import * as bootstrap from 'bootstrap';
 import { Subscription } from 'rxjs';
 import { ICart, ICartItem } from 'src/app/Models/cart-item';
+import { IOrder } from 'src/app/Models/order';
 import { AuthService } from 'src/app/Services/auth.service';
 import { CartService } from 'src/app/Services/cart.service';
 import { OrdersService } from 'src/app/Services/orders.service';
@@ -18,7 +19,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit, OnDestroy {
-  public cart: ICart | undefined;
+  public cart: ICart = {items: []};
   private subscription: Subscription;
   public isDesktop: boolean = false;
   public formPayment: FormGroup;
@@ -104,7 +105,7 @@ export class CartComponent implements OnInit, OnDestroy {
         });
       });
     } */
-    if (this.cart) {
+    if (this.cart ) {
       Swal.fire({
         title: 'Do you want to confirm the purchase?',
         showDenyButton: true,
@@ -114,12 +115,23 @@ export class CartComponent implements OnInit, OnDestroy {
       }).then((result) => {
         if (result.isConfirmed) {
           Swal.fire('Purchase confirmed!', '', 'success').then(() => {
-            console.log('Purchase confirmed');
-            const user = this.auth.authResponse
-            const order = {
 
-            }
-            this.orderService.addOrder(paymentForm);
+            const userId = this.auth.userId;
+            const order: IOrder = {
+              userId: userId,
+              suborders: this.cart?.items.map((item)=>{
+                return {
+                  productId: item._id,
+                  quantity: item.quantity,
+                  subtotal: item.price * item.quantity
+                }
+              }),
+              total: this.getTotal(this.cart.items)
+            };
+            this.orderService.addOrder(order).subscribe((response)=>{
+              console.log("La respuesta desde el component", response);
+            });
+            console.log('Purchase confirmed', order);
             this._cartService.clearCart();
             this.router.navigate(['']);
           });

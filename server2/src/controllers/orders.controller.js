@@ -5,7 +5,7 @@ import Order from "../models/Orders";
 
 
 export const getOrders = async (req, res) => {
-    const orders = await Orders.find();
+    const orders = await Order.find();
     res.status(200).json(orders);
 }
 export const getOrderById = async (req, res) => {

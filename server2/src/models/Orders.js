@@ -10,7 +10,7 @@ const suborderSchema = new Schema({
 });
 
 const orderSchema = new Schema({
-    user: { type: Schema.Types.ObjectId, ref: 'User' },
+    userId: { type: Schema.Types.ObjectId, ref: 'User' },
     suborders: [suborderSchema], // Utiliza el subesquema definido para suborders
     total: Number,
 }, {
