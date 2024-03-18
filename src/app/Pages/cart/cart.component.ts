@@ -34,7 +34,6 @@ export class CartComponent implements OnInit, OnDestroy {
 
   constructor(
     private _cartService: CartService,
-    private http: HttpClient,
     private utils: UtilsService,
     private fb: FormBuilder,
     private router: Router,
