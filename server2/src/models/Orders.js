@@ -4,7 +4,7 @@ import { Schema, model } from "mongoose";
 
 const suborderSchema = new Schema({
     _id: false, // Deshabilita la creación automática del campo _id
-    idProduct: { type: Schema.Types.ObjectId, ref: 'Product' },
+    productId: { type: Schema.Types.ObjectId, ref: 'Product' },
     quantity: Number,
     subtotal: Number
 });

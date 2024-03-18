@@ -6,6 +6,8 @@ export interface IOrder {
   userId?: string;
   suborders?: ISubOrder[];
   total: number;
+  createdAt? : Date;
+  updatedAt? : Date;
 }
 
 export interface ISubOrder {

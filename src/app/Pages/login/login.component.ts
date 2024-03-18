@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/Services/auth.service';
 export class LoginComponent implements OnInit {
 
   public form: FormGroup;
+  public isLoggedIn: boolean = false;
 
   constructor(private fb: FormBuilder, private router: Router, private authService: AuthService){
     this.form = this.fb.group({
@@ -22,19 +23,21 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
 
-
+    this.authService.isLogged.subscribe((res) => {
+      this.isLoggedIn = res;
+    })
 
   }
 
   async onSubmit(formValue: FormGroup): Promise<void> {
     if(this.form.valid) {
       console.log(formValue);
-      
+
       const res = await this.authService.onLoggIn(formValue).then((data: any) =>{
 
         console.log("Subscripción desde el componente",data);
 
-        if((this.authService.isLoggedIn)){
+        if((this.isLoggedIn)){
           if((this.authService.roles.includes("admin")) || (this.authService.roles.includes("moderator"))) {
 
             this.router.navigate(['owners']);

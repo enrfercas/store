@@ -36,13 +36,13 @@
             <a routerLink="login" *ngIf="!isLoggedIn">Login</a>
           </div>
           <div>
-            <a routerLink="" *ngIf="isLoggedIn">Logout</a>
+            <span *ngIf="isLoggedIn" (click)="logOut()" >Logout</span>
           </div>
           <div>
             <a routerLink="registration" *ngIf="!isLoggedIn">Register</a>
           </div>
           <div>
-            <a routerLink="" *ngIf="isLoggedIn">My Orders</a>
+            <a routerLink="orders" *ngIf="isLoggedIn">My Orders</a>
           </div>
         </ul>
       </mat-menu>

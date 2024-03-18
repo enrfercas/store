@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { ICart } from 'src/app/Models/cart-item';
 import { AuthService } from 'src/app/Services/auth.service';
 import { CartService } from 'src/app/Services/cart.service';
@@ -15,13 +16,11 @@ export class HeaderComponent {
   public isLoggedIn: boolean = false;
 
 
-  constructor(private _cartService: CartService, private auth: AuthService) {
+  constructor(private _cartService: CartService, private auth: AuthService, private router: Router) {
 
-    if(this.auth.isLoggedIn){
-      this.isLoggedIn = true;
-    } else {
-      this.isLoggedIn = false;
-    }
+    this.auth.isLogged.subscribe((res)=>{
+      this.isLoggedIn = res;
+    })
   }
 
   @Input()
@@ -38,5 +37,10 @@ export class HeaderComponent {
   }
   clearCart(): void {
     this._cartService.clearCart();
+  }
+  logOut(): void {
+    this.auth.onLogout();
+    this.router.navigate(['/home']);
+
   }
 }

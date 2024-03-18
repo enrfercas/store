@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { IUser } from '../Models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,8 @@ export class AuthService {
   public authResponse: { token: string, roles: string[] } | undefined;
   private baseUrl: string = 'http://localhost:4242/api/auth/';
   public isLoggedIn: boolean = false;
+  public isLogged = new BehaviorSubject<boolean>(false);
+  public $isLogged: Observable<boolean> = this.isLogged.asObservable();
   public roles: string [] = [];
   public token : string | undefined;
   public userId: string | undefined;
@@ -33,11 +36,11 @@ export class AuthService {
 
       }
       if (this.authResponse?.token === "") {
-        this.isLoggedIn = false;
+        this.isLogged.next(false);
 
 
       } else {
-        this.isLoggedIn = true;
+        this.isLogged.next(true);
 
       }
     });
@@ -76,20 +79,19 @@ export class AuthService {
   }
 
   onLogout(): void {
-
-
-    this.http.post(this.baseUrl + 'signout', {}).subscribe();
-    this.router.navigate(['/login']);
     this.authResponse = undefined;
     this.isLoggedIn = false;
     this.roles = [];
+    this.isLogged.next(false);
+    this.isLogged.unsubscribe();
     localStorage.removeItem('token');
     localStorage.removeItem('roles');
     console.log("Se ha cerrado la sesión");
-    window.location.reload();
-    return;
+    //window.location.reload();
+  }
 
-
+  onAddUser(user: IUser): Observable<any> {
+    return this.http.post<any>(this.baseUrl + 'signup', user);
   }
 
 }
