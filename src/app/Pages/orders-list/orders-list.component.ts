@@ -21,7 +21,8 @@ export class OrdersListComponent implements OnInit {
     'quantity',
     'username',
     'total',
-  ];
+    'date'
+  ]
 
   constructor(
     private orderService: OrdersService,
@@ -48,6 +49,7 @@ export class OrdersListComponent implements OnInit {
             quantity: suborder.quantity,
             subtotal: suborder.subtotal,
             total: item.total,
+            createdAt: item.createdAt
           };
         });
         return order;
@@ -72,6 +74,7 @@ export class OrdersListComponent implements OnInit {
             quantity: data.quantity,
             subtotal: data.subtotal,
             total: data.total,
+            createdAt: data.createdAt
           };
         });
 
