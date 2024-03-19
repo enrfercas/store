@@ -15,16 +15,24 @@ export class RegistrationComponent {
   constructor(private fb: FormBuilder, private router: Router,private auth: AuthService){
     this.form = fb.group({
       registerName: ["", [Validators.required, Validators.minLength(4)]],
-      registerUsername: ["", [Validators.required, Validators.minLength(4)]],
-      registerEmail: ["", [Validators.required, Validators.email]],
-      registerPassword: ["", [Validators.required, Validators.minLength(4)]],
+      username: ["", [Validators.required, Validators.minLength(4)]],
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", [Validators.required, Validators.minLength(4)]],
       registerRepeatPassword: ["", [Validators.required, Validators.minLength(4)]]
     });
   }
 
-  onSubmit(user: IUser) {
-    const token = this.auth.onAddUser(user).subscribe(data => { const token = data })
+  onSubmit(user: any) {
+    if(this.form.value.password === this.form.value.registerRepeatPassword){
+      const reqBody = {
+        username: user.username,
+        email: user.email,
+        password: user.password
+      };
+      const token = this.auth.onAddUser(reqBody).subscribe(data => { const token = data })
     console.log(user);
     this.router.navigate(['']);
+    }
+
   }
 }

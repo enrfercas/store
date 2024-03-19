@@ -8,17 +8,17 @@
           <input type="text" id="registerName" class="col-4 form-control" formControlName="registerName" #registerName
           [ngClass]="{ 'is-invalid' : form.get('registerName')?.touched && form.get('registerName')?.invalid }"
           />
-          <label class="col-4 form-label" for="registerUsername">Username</label>
-          <input type="text" id="registerUsername" class="col-4 form-control" formControlName="registerUsername" #registerUsername
-          [ngClass]="{ 'is-invalid' : form.get('registerUsername')?.touched && form.get('registerUsername')?.invalid }"
+          <label class="col-4 form-label" for="username">Username</label>
+          <input type="text" id="username" class="col-4 form-control" formControlName="username" #username
+          [ngClass]="{ 'is-invalid' : form.get('username')?.touched && form.get('username')?.invalid }"
           />
-          <label class="col-6 form-label" for="registerEmail">Email</label>
-          <input type="email" id="registerEmail" class="col-6 form-control" formControlName="registerEmail" #registerEmail
-          [ngClass]="{ 'is-invalid' : form.get('registerEmail')?.touched && form.get('registerEmail')?.invalid }"
+          <label class="col-6 form-label" for="email">Email</label>
+          <input type="email" id="email" class="col-6 form-control" formControlName="email" #email
+          [ngClass]="{ 'is-invalid' : form.get('email')?.touched && form.get('email')?.invalid }"
           />
-          <label class="form-label" for="registerPassword">Password</label>
-          <input type="password" id="registerPassword" class="form-control" formControlName="registerPassword" #registerPassword
-          [ngClass]="{ 'is-invalid' : form.get('registerPassword')?.touched && form.get('registerPassword')?.invalid }"
+          <label class="form-label" for="password">Password</label>
+          <input type="password" id="password" class="form-control" formControlName="password" #password
+          [ngClass]="{ 'is-invalid' : form.get('password')?.touched && form.get('password')?.invalid }"
           />
           <label class="form-label" for="registerRepeatPassword">Repeat password</label>
           <input type="password" id="registerRepeatPassword" class="form-control" formControlName="registerRepeatPassword" #registerRepeatPassword

@@ -35,8 +35,8 @@
             <td mat-cell *matCellDef="let element">
               {{ element.subtotal }}
             </td>
-            <td mat-footer-cell *matFooterCellDef>
-              <span>Total {{dataSource[0].total}} </span>
+            <td mat-footer-cell *matFooterCellDef="let element">
+              <span>Total {{element.total}} </span>
             </td>
           </ng-container>
 
