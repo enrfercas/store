@@ -101,7 +101,7 @@ export class HomeComponent implements OnInit {
       Swal.fire({
         title: "You need to login to purchase",
         showDenyButton: true,
-        showCancelButton: true,
+        showCancelButton: false,
         confirmButtonText: "Login",
         denyButtonText: `Cancel`
       }).then((result) => {
