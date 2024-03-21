@@ -23,7 +23,8 @@ export const getOrders = async (req, res) => {
                     break;
                 }
                 if (roles[i].name === 'user') {
-                    orders = await Order.find({ user: req.params.userId });
+                    orders = await Order.find({ userId: req.params.userId });
+                    console.log("las orders del user:", orders);
                     break;
                 }
             }
@@ -32,7 +33,7 @@ export const getOrders = async (req, res) => {
             return res.status(401).json({ message: 'Token no facilitado' });
         }
     } catch (error) {
-        return res.status(401).json({ message: 'Algo ha fallado' });
+        return res.status(401).json({ message: 'Algo ha fallado', error: error });
     }
 };
 
