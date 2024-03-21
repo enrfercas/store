@@ -6,12 +6,14 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatListOption, MatSelectionList } from '@angular/material/list';
+import { Router } from '@angular/router';
 import { ICartItem } from 'src/app/Models/cart-item';
 import { IProduct } from 'src/app/Models/product';
 import { AuthService } from 'src/app/Services/auth.service';
 import { CartService } from 'src/app/Services/cart.service';
 import { ProductsService } from 'src/app/Services/products.service';
 import { UtilsService } from 'src/app/Services/utils.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home',
@@ -28,7 +30,12 @@ export class HomeComponent implements OnInit {
 
   @ViewChild('menuCategories') menuCategories: MatSelectionList | undefined;
 
-  constructor(private cartService: CartService, private productsService: ProductsService, public auth: AuthService, private utils: UtilsService) {
+  constructor(
+    private cartService: CartService,
+    private productsService: ProductsService,
+    public auth: AuthService,
+    private utils: UtilsService,
+    private router: Router) {
     this.isDesktop = this.utils.isDesktop;
   }
 
@@ -80,7 +87,9 @@ export class HomeComponent implements OnInit {
   }
 
   onAddToCart(product: IProduct): void {
-    this.cartService.addToCart({
+    const token = this.auth.token;
+    if (token){
+      this.cartService.addToCart({
       img: product.img,
       name: product.title,
       price: product.price,
@@ -88,6 +97,24 @@ export class HomeComponent implements OnInit {
       id: product.id,
       _id: product._id,
     });
+    }else {
+      Swal.fire({
+        title: "You need to login to purchase",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Login",
+        denyButtonText: `Cancel`
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          this.router.navigate(['/login']);
+
+        } else if (result.isDenied) {
+          Swal.fire("Not logged in", "", "info");
+        }
+      });
+    }
+
   }
 
   getCategories() {

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IUser } from 'src/app/Models/user';
 import { AuthService } from 'src/app/Services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-registration',
@@ -32,6 +33,12 @@ export class RegistrationComponent {
       const token = this.auth.onAddUser(reqBody).subscribe(data => { const token = data })
     console.log(user);
     this.router.navigate(['']);
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Passwords do not match!",
+      });
     }
 
   }
